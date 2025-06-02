@@ -1,1599 +1,1914 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StarOS - Gateway for Celebrity Value into the AI-Native Era</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>StarOS - AI原生時代的明星價值門戶</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary: #3498db;
+            --secondary: #8e44ad;
+            --accent: #00ff9d;
+            --dark: #0a0a0a;
+            --dark-card: rgba(26, 32, 44, 0.7);
+        }
+        
         * {
-            margin: 0;
-            padding: 0;
+            scroll-behavior: smooth;
             box-sizing: border-box;
         }
-
-        :root {
-            --primary: #00D4FF;
-            --secondary: #7C3AED;
-            --accent: #10B981;
-            --warning: #F59E0B;
-            --danger: #EF4444;
-            --success: #22C55E;
-            --dark-bg: #0A0A0F;
-            --darker-bg: #050508;
-            --card-bg: rgba(15, 15, 25, 0.9);
-            --glass-bg: rgba(255, 255, 255, 0.05);
-            --text-primary: #FFFFFF;
-            --text-secondary: #B4B4B8;
-            --text-muted: #6B7280;
-            --border-color: rgba(255, 255, 255, 0.1);
-            --glow-primary: 0 0 20px rgba(0, 212, 255, 0.3);
-            --glow-secondary: 0 0 20px rgba(124, 58, 237, 0.3);
-            --gradient-primary: linear-gradient(135deg, #00D4FF 0%, #7C3AED 50%, #10B981 100%);
-            --gradient-card: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(124, 58, 237, 0.1) 100%);
-            --gradient-text: linear-gradient(135deg, #00D4FF 0%, #FFFFFF 50%, #10B981 100%);
-        }
-
+        
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--dark-bg);
-            color: var(--text-primary);
-            line-height: 1.6;
+            font-family: 'Inter', 'Noto Sans TC', sans-serif;
+            background-color: var(--dark);
+            color: #ffffff;
             overflow-x: hidden;
-            position: relative;
-        }
-
-        /* Animated Background */
-        .background-animation {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background: radial-gradient(ellipse at top, rgba(0, 212, 255, 0.05) 0%, transparent 50%),
-                        radial-gradient(ellipse at bottom right, rgba(124, 58, 237, 0.05) 0%, transparent 50%),
-                        radial-gradient(ellipse at bottom left, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
-            animation: backgroundShift 20s ease-in-out infinite;
-        }
-
-        @keyframes backgroundShift {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.8; }
-        }
-
-        .grid-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
             background-image: 
-                linear-gradient(rgba(0, 212, 255, 0.1) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 212, 255, 0.1) 1px, transparent 1px);
-            background-size: 100px 100px;
-            animation: gridMove 30s linear infinite;
+                radial-gradient(circle at 10% 20%, rgba(52, 152, 219, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(142, 68, 173, 0.1) 0%, transparent 20%);
         }
-
-        @keyframes gridMove {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(100px, 100px); }
+        
+        .logo-font {
+            font-family: 'Inter', 'Noto Sans TC', sans-serif;
+            font-weight: 900;
+            font-size: 2.5rem;
+            letter-spacing: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            position: relative;
+            display: inline-block;
+            text-shadow: 0 0 15px rgba(0, 255, 157, 0.3);
+            animation: logoGlow 3s ease-in-out infinite alternate;
         }
-
-        /* Navigation */
+        
+        @keyframes logoGlow {
+            0% { text-shadow: 0 0 10px rgba(0, 255, 157, 0.3); }
+            100% { text-shadow: 0 0 25px rgba(0, 255, 157, 0.6), 0 0 35px rgba(52, 152, 219, 0.4); }
+        }
+        
+        .logo-sub {
+            font-family: 'Inter', 'Noto Sans TC', sans-serif;
+            font-weight: 700;
+            font-size: 0.7rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-top: -10px;
+            text-align: center;
+            opacity: 0.8;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, var(--primary), var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .card {
+            background-color: var(--dark-card);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+        
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 255, 157, 0.2);
+            border-color: rgba(0, 255, 157, 0.3);
+        }
+        
         .navbar {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(10, 10, 15, 0.95);
+            background-color: rgba(10, 10, 10, 0.95);
             backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border-color);
+            border-bottom: 1px solid rgba(0, 255, 157, 0.1);
+            transition: all 0.3s ease;
             z-index: 1000;
-            padding: 1rem 0;
-            transition: all 0.3s ease;
         }
-
+        
         .navbar.scrolled {
-            background: rgba(5, 5, 8, 0.98);
-            box-shadow: var(--glow-primary);
+            background-color: rgba(10, 10, 10, 0.98);
+            backdrop-filter: blur(25px);
         }
-
-        .nav-container {
-            max-width: 1600px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 2rem;
-        }
-
-        .logo {
-            font-family: 'Orbitron', monospace;
-            font-size: 2rem;
-            font-weight: 900;
-            background: var(--gradient-text);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-decoration: none;
-            position: relative;
-            cursor: pointer;
-        }
-
-        .logo::before {
-            content: '';
-            position: absolute;
-            top: -5px;
-            left: -5px;
-            right: -5px;
-            bottom: -5px;
-            background: var(--gradient-primary);
-            opacity: 0.2;
-            border-radius: 8px;
-            filter: blur(10px);
-            z-index: -1;
-        }
-
-        .nav-menu {
-            display: flex;
-            list-style: none;
-            gap: 3rem;
-        }
-
-        .nav-menu a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
-            position: relative;
-            padding: 0.5rem 0;
-            cursor: pointer;
-        }
-
-        .nav-menu a::before {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--gradient-primary);
-            transition: width 0.3s ease;
-        }
-
-        .nav-menu a:hover {
-            color: var(--text-primary);
-            text-shadow: var(--glow-primary);
-        }
-
-        .nav-menu a:hover::before,
-        .nav-menu a.active::before {
-            width: 100%;
-        }
-
-        .nav-menu a.active {
-            color: var(--primary);
-        }
-
-        .nav-actions {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-        }
-
-        .ai-status {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            background: var(--glass-bg);
-            border: 1px solid rgba(0, 212, 255, 0.3);
-            border-radius: 20px;
-            font-size: 0.85rem;
-            color: var(--primary);
-        }
-
-        .ai-status-dot {
-            width: 8px;
-            height: 8px;
-            background: var(--primary);
-            border-radius: 50%;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-
-        .language-selector {
-            position: relative;
-        }
-
-        .language-btn {
-            background: var(--glass-bg);
-            border: 1px solid var(--border-color);
-            color: var(--text-primary);
-            padding: 0.75rem 1.25rem;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 500;
-        }
-
-        .language-btn:hover {
-            border-color: var(--primary);
-            box-shadow: var(--glow-primary);
-        }
-
-        .wallet-connect {
-            background: var(--gradient-primary);
-            color: white;
-            border: none;
-            padding: 0.75rem 2rem;
-            border-radius: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .wallet-connect::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .wallet-connect:hover::before {
-            left: 100%;
-        }
-
-        .wallet-connect:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--glow-primary);
-        }
-
-        /* Page Container */
-        .page-container {
-            display: none;
-            min-height: 100vh;
-            padding-top: 100px;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.5s ease, transform 0.5s ease;
-        }
-
-        .page-container.active {
-            display: block;
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Common Styles */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            position: relative;
-            padding-top: 100px;
-        }
-
-        .hero-container {
-            max-width: 1600px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: grid;
-            grid-template-columns: 1.2fr 1fr;
-            align-items: center;
-            gap: 6rem;
-        }
-
-        .hero-content h1 {
-            font-family: 'Orbitron', monospace;
-            font-size: 4.5rem;
-            font-weight: 900;
-            line-height: 1.1;
-            margin-bottom: 2rem;
-            background: var(--gradient-text);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: var(--glow-primary);
-        }
-
-        .hero-subtitle {
-            font-size: 1.5rem;
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
-            font-weight: 300;
-            line-height: 1.6;
-        }
-
-        .hero-description {
-            font-size: 1.25rem;
-            color: var(--text-muted);
-            margin-bottom: 3rem;
-            line-height: 1.7;
-            max-width: 600px;
-        }
-
+        
         .btn-primary {
-            background: var(--gradient-primary);
-            color: white;
-            border: none;
-            padding: 1.25rem 2.5rem;
-            border-radius: 12px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
+            border: none;
+            font-weight: 600;
         }
-
-        .btn-primary::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .btn-primary:hover::before {
-            left: 100%;
-        }
-
+        
         .btn-primary:hover {
             transform: translateY(-3px);
-            box-shadow: var(--glow-primary);
+            box-shadow: 0 10px 20px rgba(52, 152, 219, 0.4);
         }
-
+        
         .btn-secondary {
-            background: transparent;
-            color: var(--text-primary);
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            padding: 1.25rem 2.5rem;
-            border-radius: 12px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
+            background-color: transparent;
+            border: 1px solid var(--accent);
+            color: var(--accent);
             transition: all 0.3s ease;
+            font-weight: 600;
         }
-
+        
         .btn-secondary:hover {
-            border-color: var(--primary);
-            background: rgba(0, 212, 255, 0.1);
-            box-shadow: var(--glow-primary);
+            background-color: rgba(0, 255, 157, 0.1);
+            transform: translateY(-3px);
         }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 6rem;
-        }
-
-        .section-header .badge {
-            display: inline-block;
-            background: var(--glass-bg);
-            border: 1px solid var(--primary);
-            color: var(--primary);
-            padding: 0.5rem 1.5rem;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .section-header h2 {
-            font-family: 'Orbitron', monospace;
-            font-size: 3.5rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            background: var(--gradient-text);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .section-header p {
-            font-size: 1.3rem;
-            color: var(--text-secondary);
-            max-width: 800px;
-            margin: 0 auto;
-            line-height: 1.6;
-        }
-
-        /* Footer */
-        .footer {
-            background: var(--darker-bg);
-            padding: 6rem 0 2rem;
-            border-top: 1px solid var(--border-color);
-        }
-
-        .footer-container {
-            max-width: 1600px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
-            gap: 4rem;
-            margin-bottom: 4rem;
-        }
-
-        .footer-brand {
-            max-width: 400px;
-        }
-
-        .footer-brand .logo {
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
-            display: block;
-        }
-
-        .footer-brand p {
-            color: var(--text-secondary);
-            line-height: 1.7;
-            margin-bottom: 2rem;
-            font-size: 1.1rem;
-        }
-
-        .footer-social {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .footer-social a {
-            width: 50px;
-            height: 50px;
-            background: var(--glass-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
+        
+        .hero {
+            position: relative;
+            overflow: hidden;
+            min-height: 100vh;
             display: flex;
             align-items: center;
-            justify-content: center;
-            color: var(--text-primary);
-            font-size: 1.2rem;
-            transition: all 0.3s ease;
+            padding-top: 120px;
         }
-
-        .footer-social a:hover {
-            border-color: var(--primary);
-            background: rgba(0, 212, 255, 0.1);
-            color: var(--primary);
-            box-shadow: var(--glow-primary);
-        }
-
-        .footer-section h4 {
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-            color: var(--text-primary);
-        }
-
-        .footer-section ul {
-            list-style: none;
-        }
-
-        .footer-section a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            display: block;
-            margin-bottom: 1rem;
-            transition: color 0.3s ease;
-            font-size: 1rem;
-        }
-
-        .footer-section a:hover {
-            color: var(--primary);
-        }
-
-        .footer-bottom {
-            border-top: 1px solid var(--border-color);
-            padding-top: 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .footer-bottom p {
-            color: var(--text-muted);
-        }
-
-        .footer-legal {
-            display: flex;
-            gap: 2rem;
-        }
-
-        .footer-legal a {
-            color: var(--text-muted);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .footer-legal a:hover {
-            color: var(--primary);
-        }
-
-        /* Loading Animation - Hidden by default */
-        .loading-overlay {
-            position: fixed;
+        
+        .hero:before {
+            content: "";
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: var(--darker-bg);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            opacity: 0;
-            pointer-events: none;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 100%);
+            z-index: 1;
         }
-
-        .loader {
-            width: 100px;
-            height: 100px;
-            border: 3px solid var(--border-color);
-            border-top: 3px solid var(--primary);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
         }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* Responsive Design */
-        @media (max-width: 1200px) {
-            .hero-container {
-                grid-template-columns: 1fr;
-                text-align: center;
-                gap: 4rem;
-            }
-
-            .footer-content {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .nav-menu {
-                display: none;
-            }
-
-            .hero-content h1 {
-                font-size: 3rem;
-            }
-
-            .section-header h2 {
-                font-size: 2.5rem;
-            }
-
-            .footer-content {
-                grid-template-columns: 1fr;
-                gap: 3rem;
-            }
-
-            .footer-bottom {
-                flex-direction: column;
-                text-align: center;
-            }
-        }
-
-        /* Page-specific content will be injected here */
-        .page-content {
-            min-height: 60vh;
-            padding: 4rem 0;
-        }
-
-        .container {
-            max-width: 1600px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.6s ease;
-        }
-
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Notification */
-        .notification {
-            position: fixed;
-            top: 100px;
-            right: 20px;
-            background: var(--card-bg);
-            border: 1px solid var(--primary);
-            border-radius: 12px;
-            padding: 1rem 1.5rem;
-            color: var(--text-primary);
-            box-shadow: var(--glow-primary);
-            z-index: 10000;
-            transform: translateX(400px);
-            transition: transform 0.3s ease;
-            max-width: 300px;
-        }
-
-        .notification.show {
-            transform: translateX(0);
-        }
-
-        /* Mobile Menu */
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            color: var(--text-primary);
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: 0.5rem;
-        }
-
-        .mobile-menu {
-            position: fixed;
-            top: 100px;
+        
+        .hero-bg {
+            position: absolute;
+            top: 0;
             left: 0;
             width: 100%;
-            background: var(--darker-bg);
-            border-top: 1px solid var(--border-color);
-            display: none;
-            flex-direction: column;
-            z-index: 999;
+            height: 100%;
+            background-image: url('https://images.unsplash.com/photo-1635805737707-575885ab0820?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.6;
+            animation: bgPan 60s infinite linear;
         }
-
-        .mobile-menu.active {
-            display: flex;
+        
+        @keyframes bgPan {
+            0% { background-position: 0% 0%; }
+            50% { background-position: 100% 100%; }
+            100% { background-position: 0% 0%; }
         }
-
-        .mobile-menu a {
-            padding: 1rem 2rem;
-            color: var(--text-secondary);
-            text-decoration: none;
-            border-bottom: 1px solid var(--border-color);
+        
+        .floating {
+            animation: floating 6s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .animate-fade-in {
+            animation: fadeIn 1s ease-in-out forwards;
+            opacity: 0;
+        }
+        
+        .animate-slide-up {
+            animation: slideUp 0.8s ease-in-out forwards;
+            opacity: 0;
+        }
+        
+        .animate-slide-right {
+            animation: slideRight 0.8s ease-in-out forwards;
+            opacity: 0;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        @keyframes slideRight {
+            from { transform: translateX(-50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        .progress-bar {
+            background: linear-gradient(to right, var(--primary), var(--accent), var(--secondary));
+            border-radius: 9999px;
+            height: 8px;
+        }
+        
+        .cyber-border {
+            position: relative;
+        }
+        
+        .cyber-border:after {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            right: -3px;
+            bottom: -3px;
+            background: linear-gradient(45deg, transparent 30%, var(--accent) 45%, var(--secondary) 55%, transparent 70%);
+            background-size: 200% 200%;
+            animation: borderGlow 5s linear infinite;
+            z-index: -1;
+            border-radius: 20px;
+        }
+        
+        @keyframes borderGlow {
+            0% { background-position: 0% 0%; }
+            50% { background-position: 100% 100%; }
+            100% { background-position: 0% 0%; }
+        }
+        
+        .ai-element {
+            position: absolute;
+            background-color: rgba(52, 152, 219, 0.1);
+            border: 1px solid rgba(52, 152, 219, 0.3);
+            backdrop-filter: blur(5px);
+            padding: 10px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 12px;
+            color: var(--accent);
+            z-index: 3;
+            pointer-events: none;
+            box-shadow: 0 0 15px rgba(0, 255, 157, 0.1);
+        }
+        
+        .data-stream {
+            position: absolute;
+            height: 100px;
+            width: 2px;
+            background: linear-gradient(to bottom, transparent, var(--accent), var(--secondary), transparent);
+            z-index: 0;
+            animation: dataStream 2s linear infinite;
+            opacity: 0.3;
+        }
+        
+        @keyframes dataStream {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100vh); }
+        }
+        
+        .stats-card {
+            text-align: center;
+            padding: 25px;
+            border-radius: 16px;
+            background: var(--dark-card);
+            border: 1px solid rgba(0, 255, 157, 0.1);
             transition: all 0.3s ease;
         }
-
-        .mobile-menu a:hover,
-        .mobile-menu a.active {
-            background: rgba(0, 212, 255, 0.1);
-            color: var(--primary);
+        
+        .stats-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            background: rgba(26, 32, 44, 0.9);
         }
-
-        @media (max-width: 768px) {
+        
+        .stats-card i {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--accent);
+        }
+        
+        .stats-card .number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, var(--primary), var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            margin: 0 auto 1rem;
+        }
+        
+        .tech-stack-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .tech-stack-item:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .value-proposition {
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.1), rgba(142, 68, 173, 0.1));
+            border: 1px solid rgba(0, 255, 157, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 1rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .value-proposition:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(0, 255, 157, 0.05), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .value-proposition:hover:before {
+            opacity: 1;
+        }
+        
+        .challenge-item {
+            background: rgba(220, 53, 69, 0.1);
+            border: 1px solid rgba(220, 53, 69, 0.3);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+        
+        .solution-item {
+            background: rgba(40, 167, 69, 0.1);
+            border: 1px solid rgba(40, 167, 69, 0.3);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+        
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 300px;
+            height: 100vh;
+            background: rgba(10, 10, 10, 0.98);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            padding: 20px;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+        
+        .section-divider {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            margin: 4rem 0;
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding-left: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .timeline-item:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 10px var(--accent);
+        }
+        
+        .timeline-item:after {
+            content: '';
+            position: absolute;
+            left: 5px;
+            top: 1.5rem;
+            width: 2px;
+            height: calc(100% + 1rem);
+            background: linear-gradient(to bottom, var(--accent), transparent);
+        }
+        
+        .timeline-item:last-child:after {
+            display: none;
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 1024px) {
+            .desktop-nav {
+                display: none;
+            }
+            
             .mobile-menu-btn {
                 display: block;
             }
-
-            .nav-actions {
-                gap: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .hero {
+                min-height: 90vh;
+                padding-top: 100px;
             }
-
-            .language-btn,
-            .wallet-connect {
-                padding: 0.5rem 1rem;
+            
+            .logo-font {
+                font-size: 1.8rem;
+                letter-spacing: 2px;
+            }
+            
+            .logo-sub {
+                font-size: 0.6rem;
+                letter-spacing: 3px;
+            }
+            
+            .navbar {
+                padding: 0.75rem 1rem;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .stats-card .number {
+                font-size: 2rem;
+            }
+            
+            .feature-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+                line-height: 1.2;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            /* AI elements positioning for mobile */
+            .ai-element {
+                top: auto !important;
+                bottom: 100px !important;
+                left: 5% !important;
+                right: 5% !important;
+                width: 90%;
+                z-index: 5;
+                font-size: 10px;
+                opacity: 0.7;
+            }
+            
+            /* Stats grid layout optimization */
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            /* Timeline item adjustments */
+            .timeline-item {
+                padding-left: 1.5rem;
+            }
+            
+            .timeline-item:before {
+                top: 0.3rem;
+                width: 10px;
+                height: 10px;
+            }
+            
+            .timeline-item:after {
+                left: 4px;
+                top: 1.3rem;
+            }
+            
+            /* Mobile text adjustments */
+            h2 {
+                font-size: 1.8rem;
+            }
+            
+            h3 {
+                font-size: 1.5rem;
+            }
+            
+            .value-proposition, .challenge-item, .solution-item {
+                padding: 1.2rem;
+            }
+            
+            .card {
+                padding: 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero {
+                min-height: 85vh;
+                padding-top: 90px;
+            }
+            
+            .logo-font {
+                font-size: 1.5rem;
+                letter-spacing: 1px;
+            }
+            
+            .logo-sub {
+                font-size: 0.55rem;
+                letter-spacing: 2px;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+                line-height: 1.3;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .value-proposition,
+            .challenge-item,
+            .solution-item {
+                padding: 1rem;
+            }
+            
+            /* Hide AI elements completely on small mobile */
+            .ai-element {
+                display: none;
+            }
+            
+            /* Navbar optimization */
+            .navbar .container {
+                flex-wrap: wrap;
+            }
+            
+            .navbar .flex {
+                order: 2;
+                width: 100%;
+                justify-content: center;
+                margin-top: 10px;
+            }
+            
+            /* Button optimization */
+            .btn-primary, .btn-secondary {
+                padding: 10px 20px;
                 font-size: 0.9rem;
             }
+            
+            /* Roadmap item adjustments */
+            .timeline-item .bg-blue-900, 
+            .timeline-item .bg-purple-900, 
+            .timeline-item .bg-green-900, 
+            .timeline-item .bg-yellow-900 {
+                padding: 1rem;
+            }
+            
+            .timeline-item h3 {
+                font-size: 1.3rem;
+            }
+            
+            /* Mobile menu width adjustment */
+            .mobile-menu {
+                width: 85%;
+            }
         }
         
-        /* Additional animations */
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
         }
         
-        @keyframes scan {
-            0% { left: -100%; }
-            100% { left: 100%; }
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.1);
         }
         
-        @keyframes rotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 4px;
         }
         
-        /* Wallet page styles */
-        .wallet-section {
-            background: linear-gradient(135deg, rgba(0, 212, 255, 0.05) 0%, rgba(124, 58, 237, 0.05) 100%);
-            border-radius: 20px;
-            padding: 3rem;
-            margin: 3rem 0;
+        /* Ripple effect */
+        .ripple {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.6);
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            border-radius: 50%;
+            animation: ripple-animation 0.6s linear;
         }
         
-        .wallet-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+        @keyframes ripple-animation {
+            0% {
+                width: 0;
+                height: 0;
+                opacity: 1;
+            }
+            100% {
+                width: 500px;
+                height: 500px;
+                opacity: 0;
+            }
         }
         
-        .wallet-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 2rem;
-            transition: all 0.3s ease;
+        /* Mobile specific optimizations */
+        .mobile-optimized {
+            font-size: 0.95rem;
+            line-height: 1.6;
         }
         
-        .wallet-card:hover {
-            border-color: var(--primary);
-            box-shadow: var(--glow-primary);
-            transform: translateY(-5px);
+        .mobile-text-center {
+            text-align: center;
+        }
+        
+        .mobile-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
     </style>
 </head>
 <body>
-    <!-- Loading Overlay - Hidden by default -->
-    <div class="loading-overlay" id="loadingOverlay" style="display: none;">
-        <div class="loader"></div>
+    <!-- AI Elements -->
+    <div class="ai-element" style="top: 120px; left: 10%;">
+        數位人類：已啟用<br>
+        價值遷移：89%<br>
+        // AI原生世界準備就緒
     </div>
-
-    <!-- Animated Background -->
-    <div class="background-animation"></div>
-    <div class="grid-overlay"></div>
+    
+    <div class="ai-element" style="bottom: 150px; right: 15%;">
+        明星價值：已保存<br>
+        區塊鏈：已保護<br>
+        // 永恆連結
+    </div>
+    
+    <!-- Data streams -->
+    <div class="data-stream" style="left: 20%; animation-delay: 0s;"></div>
+    <div class="data-stream" style="left: 40%; animation-delay: 0.5s;"></div>
+    <div class="data-stream" style="left: 60%; animation-delay: 1s;"></div>
+    <div class="data-stream" style="left: 80%; animation-delay: 1.5s;"></div>
 
     <!-- Navigation -->
-    <nav class="navbar" id="navbar">
-        <div class="nav-container">
-            <a href="#" class="logo" onclick="navigateTo('home')">StarOS</a>
-            <ul class="nav-menu">
-                <li><a href="#" onclick="navigateTo('home')" data-page="home" class="active">Home</a></li>
-                <li><a href="#" onclick="navigateTo('digital-humans')" data-page="digital-humans">Digital Humans</a></li>
-                <li><a href="#" onclick="navigateTo('platform')" data-page="platform">Platform</a></li>
-                <li><a href="#" onclick="navigateTo('marketplace')" data-page="marketplace">Marketplace</a></li>
-                <li><a href="#" onclick="navigateTo('legal')" data-page="legal">Legal</a></li>
-                <li><a href="#" onclick="navigateTo('social')" data-page="social">Social</a></li>
-                <li><a href="#" onclick="navigateTo('wallet')" data-page="wallet">Wallet</a></li>
-            </ul>
-            <div class="nav-actions">
-                <div class="ai-status">
-                    <div class="ai-status-dot"></div>
-                    <span>AI Systems Online</span>
-                </div>
-                <div class="language-selector">
-                    <button class="language-btn" onclick="toggleLanguage()">
-                        <i class="fas fa-globe"></i> <span id="currentLang">EN</span>
-                    </button>
-                </div>
-                <button class="wallet-connect" onclick="connectWallet()">
-                    <i class="fas fa-wallet"></i> <span id="walletStatus">Connect Wallet</span>
-                </button>
-                <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
-                    <i class="fas fa-bars"></i>
+    <nav class="navbar fixed w-full z-50 px-4 py-3">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="#home" class="flex flex-col items-center">
+                <div class="logo-font">StarOS</div>
+                <div class="logo-sub">數位人類代理平台</div>
+            </a>
+            <div class="hidden lg:flex space-x-8 desktop-nav">
+                <a href="#vision" class="hover:text-blue-400 transition">願景與使命</a>
+                <a href="#challenges" class="hover:text-blue-400 transition">AI時代挑戰</a>
+                <a href="#solutions" class="hover:text-blue-400 transition">解決方案</a>
+                <a href="#technology" class="hover:text-blue-400 transition">技術架構</a>
+                <a href="#ecosystem" class="hover:text-blue-400 transition">生態系統</a>
+                <a href="#roadmap" class="hover:text-blue-400 transition">發展路線</a>
+            </div>
+            <div class="flex items-center space-x-4">
+                <a href="#contact" class="btn-primary px-6 py-2 rounded-full text-sm hidden lg:block">聯繫我們</a>
+                
+                <button class="lg:hidden text-white mobile-menu-btn">
+                    <i class="fas fa-bars text-xl"></i>
                 </button>
             </div>
-        </div>
-        
-        <!-- Mobile Menu -->
-        <div class="mobile-menu" id="mobileMenu">
-            <a href="#" onclick="navigateTo('home')" data-page="home" class="active">Home</a>
-            <a href="#" onclick="navigateTo('digital-humans')" data-page="digital-humans">Digital Humans</a>
-            <a href="#" onclick="navigateTo('platform')" data-page="platform">Platform</a>
-            <a href="#" onclick="navigateTo('marketplace')" data-page="marketplace">Marketplace</a>
-            <a href="#" onclick="navigateTo('legal')" data-page="legal">Legal</a>
-            <a href="#" onclick="navigateTo('social')" data-page="social">Social</a>
-            <a href="#" onclick="navigateTo('wallet')" data-page="wallet">Wallet</a>
         </div>
     </nav>
 
-    <!-- Page Containers -->
-    <!-- Home Page -->
-    <div class="page-container active" id="home-page">
-        <!-- Hero Section -->
-        <section class="hero">
-            <div class="hero-container">
-                <div class="hero-content">
-                    <h1>
-                        <span>Gateway for Celebrity Value into the</span><br>
-                        <span>AI-Native Era</span>
-                    </h1>
-                    <p class="hero-subtitle">
-                        The World's First Digital Human Agency Platform for Celebrity Migration to AI-Native World
-                    </p>
-                    <p class="hero-description">
-                        StarOS revolutionizes celebrity value preservation and activation in the AI-native era. We provide comprehensive solutions for digital human creation, identity verification, value migration, and fan community co-creation.
-                    </p>
-                    <div style="margin-bottom: 3rem;">
-                        <ul style="list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                            <li style="display: flex; align-items: center; gap: 0.75rem; color: var(--text-secondary); font-weight: 500;">
-                                <i class="fas fa-check-circle" style="color: var(--primary);"></i> Digital Value Preservation
-                            </li>
-                            <li style="display: flex; align-items: center; gap: 0.75rem; color: var(--text-secondary); font-weight: 500;">
-                                <i class="fas fa-check-circle" style="color: var(--primary);"></i> Unlimited Content Creation
-                            </li>
-                            <li style="display: flex; align-items: center; gap: 0.75rem; color: var(--text-secondary); font-weight: 500;">
-                                <i class="fas fa-check-circle" style="color: var(--primary);"></i> Authentic Identity Verification
-                            </li>
-                            <li style="display: flex; align-items: center; gap: 0.75rem; color: var(--text-secondary); font-weight: 500;">
-                                <i class="fas fa-check-circle" style="color: var(--primary);"></i> Fan Co-Creation Ecosystem
-                            </li>
-                            <li style="display: flex; align-items: center; gap: 0.75rem; color: var(--text-secondary); font-weight: 500;">
-                                <i class="fas fa-check-circle" style="color: var(--primary);"></i> Global 24/7 Accessibility
-                            </li>
-                            <li style="display: flex; align-items: center; gap: 0.75rem; color: var(--text-secondary); font-weight: 500;">
-                                <i class="fas fa-check-circle" style="color: var(--primary);"></i> Web3 Value Distribution
-                            </li>
-                        </ul>
-                    </div>
-                    <div style="display: flex; gap: 1.5rem; flex-wrap: wrap;">
-                        <button class="btn-primary">
-                            <i class="fas fa-rocket"></i> Explore Platform
-                        </button>
-                        <button class="btn-secondary">
-                            <i class="fas fa-play"></i> Watch Demo
-                        </button>
-                    </div>
-                </div>
-                <div style="position: relative; display: flex; justify-content: center; align-items: center;">
-                    <div style="position: relative; width: 500px; height: 600px;">
-                        <div style="width: 100%; height: 100%; background: var(--gradient-card); border: 2px solid rgba(0, 212, 255, 0.3); border-radius: 20px; position: relative; overflow: hidden; backdrop-filter: blur(20px); animation: float 6s ease-in-out infinite;">
-                            <div style="position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.1), transparent); animation: scan 3s linear infinite;"></div>
-                            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; z-index: 2;">
-                                <div style="width: 200px; height: 200px; background: var(--gradient-primary); border-radius: 50%; margin: 0 auto 2rem; display: flex; align-items: center; justify-content: center; font-size: 4rem; color: white; position: relative; animation: rotate 20s linear infinite;">
-                                    <i class="fas fa-user-astronaut"></i>
-                                </div>
-                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2rem;">
-                                    <div style="text-align: center; padding: 1rem; background: rgba(0, 212, 255, 0.1); border-radius: 8px;">
-                                        <div style="font-size: 1.5rem; font-weight: 700; color: var(--primary); margin-bottom: 0.25rem;">24/7</div>
-                                        <div style="font-size: 0.8rem; color: var(--text-secondary);">Available</div>
-                                    </div>
-                                    <div style="text-align: center; padding: 1rem; background: rgba(0, 212, 255, 0.1); border-radius: 8px;">
-                                        <div style="font-size: 1.5rem; font-weight: 700; color: var(--primary); margin-bottom: 0.25rem;">∞</div>
-                                        <div style="font-size: 0.8rem; color: var(--text-secondary);">Scalable</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+        <div class="mobile-menu-close absolute top-5 right-5 text-2xl cursor-pointer text-accent">
+            <i class="fas fa-times"></i>
+        </div>
+        
+        <div class="mt-16 flex flex-col space-y-6">
+            <a href="#vision" class="text-xl hover:text-blue-400 transition">願景與使命</a>
+            <a href="#challenges" class="text-xl hover:text-blue-400 transition">AI時代挑戰</a>
+            <a href="#solutions" class="text-xl hover:text-blue-400 transition">解決方案</a>
+            <a href="#technology" class="text-xl hover:text-blue-400 transition">技術架構</a>
+            <a href="#ecosystem" class="text-xl hover:text-blue-400 transition">生態系統</a>
+            <a href="#roadmap" class="text-xl hover:text-blue-400 transition">發展路線</a>
+            
+            <div class="pt-6 border-t border-gray-700">
+                <button class="btn-primary w-full py-3 rounded-lg font-medium text-center">
+                    聯繫我們
+                </button>
             </div>
-        </section>
-
-        <!-- Statistics Section -->
-        <section style="padding: 6rem 0; background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); position: relative;">
-            <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: url('data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><circle cx=\"50\" cy=\"50\" r=\"2\" fill=\"rgba(255,255,255,0.1)\"/></svg>') repeat; background-size: 100px 100px; animation: drift 20s linear infinite;"></div>
-            <div class="container" style="position: relative; z-index: 2;">
-                <div class="section-header" style="color: white;">
-                    <h2>Platform Performance Metrics</h2>
-                    <p style="color: rgba(255,255,255,0.9);">Real-time statistics demonstrating the scale and impact of StarOS platform across global markets.</p>
-                </div>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 4rem; text-align: center;">
-                    <div>
-                        <h3 style="font-family: 'Orbitron', monospace; font-size: 4rem; font-weight: 900; color: white; margin-bottom: 1rem; text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);">1M+</h3>
-                        <p style="color: rgba(255, 255, 255, 0.9); font-size: 1.2rem; font-weight: 500;">Daily Interactions</p>
-                    </div>
-                    <div>
-                        <h3 style="font-family: 'Orbitron', monospace; font-size: 4rem; font-weight: 900; color: white; margin-bottom: 1rem; text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);">150+</h3>
-                        <p style="color: rgba(255, 255, 255, 0.9); font-size: 1.2rem; font-weight: 500;">Celebrity Partners</p>
-                    </div>
-                    <div>
-                        <h3 style="font-family: 'Orbitron', monospace; font-size: 4rem; font-weight: 900; color: white; margin-bottom: 1rem; text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);">5M+</h3>
-                        <p style="color: rgba(255, 255, 255, 0.9); font-size: 1.2rem; font-weight: 500;">Active Users</p>
-                    </div>
-                    <div>
-                        <h3 style="font-family: 'Orbitron', monospace; font-size: 4rem; font-weight: 900; color: white; margin-bottom: 1rem; text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);">50+</h3>
-                        <p style="color: rgba(255, 255, 255, 0.9); font-size: 1.2rem; font-weight: 500;">Supported Languages</p>
-                    </div>
-                    <div>
-                        <h3 style="font-family: 'Orbitron', monospace; font-size: 4rem; font-weight: 900; color: white; margin-bottom: 1rem; text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);">99.9%</h3>
-                        <p style="color: rgba(255, 255, 255, 0.9); font-size: 1.2rem; font-weight: 500;">Platform Uptime</p>
-                    </div>
-                    <div>
-                        <h3 style="font-family: 'Orbitron', monospace; font-size: 4rem; font-weight: 900; color: white; margin-bottom: 1rem; text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);">$50M+</h3>
-                        <p style="color: rgba(255, 255, 255, 0.9); font-size: 1.2rem; font-weight: 500;">Value Distributed</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+        </div>
     </div>
 
-    <!-- Digital Humans Page -->
-    <div class="page-container" id="digital-humans-page">
-        <section style="min-height: 70vh; display: flex; align-items: center; position: relative; padding-top: 100px; text-align: center;">
-            <div class="container">
-                <h1 style="font-family: 'Orbitron', monospace; font-size: 4rem; font-weight: 900; line-height: 1.1; margin-bottom: 2rem; background: var(--gradient-text); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; text-shadow: var(--glow-primary);">Digital Human Gallery</h1>
-                <p style="font-size: 1.5rem; color: var(--text-secondary); margin-bottom: 3rem; font-weight: 300; line-height: 1.6; max-width: 800px; margin-left: auto; margin-right: auto;">
-                    Explore our collection of AI-native digital celebrities, each meticulously crafted using StarOS's proprietary value gene mapping technology.
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-bg"></div>
+        <div class="container mx-auto px-4 hero-content">
+            <div class="max-w-4xl animate-fade-in">
+                <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+                    明星價值通往<br>
+                    <span class="gradient-text">AI原生時代的門戶</span>
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-300 mb-8 leading-relaxed mobile-optimized">
+                    StarOS是全球首個專為遷移和激活明星價值而設計的AI原生平台，幫助明星過渡到未來的AI原生世界，同時保存和增強他們的遺產。
                 </p>
-                
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin: 4rem 0; max-width: 1000px; margin-left: auto; margin-right: auto;">
-                    <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 2rem; text-align: center; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.borderColor='var(--primary)'; this.style.boxShadow='var(--glow-primary)'" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='var(--border-color)'; this.style.boxShadow='none'">
-                        <div style="font-family: 'Orbitron', monospace; font-size: 2.5rem; font-weight: 900; color: var(--primary); margin-bottom: 0.5rem;">150+</div>
-                        <div style="color: var(--text-secondary); font-weight: 500;">Digital Humans</div>
-                    </div>
-                    <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 2rem; text-align: center; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.borderColor='var(--primary)'; this.style.boxShadow='var(--glow-primary)'" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='var(--border-color)'; this.style.boxShadow='none'">
-                        <div style="font-family: 'Orbitron', monospace; font-size: 2.5rem; font-weight: 900; color: var(--primary); margin-bottom: 0.5rem;">99.9%</div>
-                        <div style="color: var(--text-secondary); font-weight: 500;">Authenticity</div>
-                    </div>
-                    <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 2rem; text-align: center; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.borderColor='var(--primary)'; this.style.boxShadow='var(--glow-primary)'" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='var(--border-color)'; this.style.boxShadow='none'">
-                        <div style="font-family: 'Orbitron', monospace; font-size: 2.5rem; font-weight: 900; color: var(--primary); margin-bottom: 0.5rem;">24/7</div>
-                        <div style="color: var(--text-secondary); font-weight: 500;">Availability</div>
-                    </div>
-                    <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 2rem; text-align: center; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.borderColor='var(--primary)'; this.style.boxShadow='var(--glow-primary)'" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='var(--border-color)'; this.style.boxShadow='none'">
-                        <div style="font-family: 'Orbitron', monospace; font-size: 2.5rem; font-weight: 900; color: var(--primary); margin-bottom: 0.5rem;">5M+</div>
-                        <div style="color: var(--text-secondary); font-weight: 500;">Interactions</div>
-                    </div>
+                <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6">
+                    <a href="#vision" class="btn-primary px-8 py-4 rounded-full font-medium text-center text-lg">
+                        探索未來
+                    </a>
+                    <a href="#whitepaper" class="btn-secondary px-8 py-4 rounded-full font-medium text-center text-lg">
+                        下載白皮書
+                    </a>
                 </div>
                 
-                <div style="display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap;">
-                    <button class="btn-primary">
-                        <i class="fas fa-rocket"></i> Explore Now
-                    </button>
-                    <button class="btn-secondary">
-                        <i class="fas fa-play"></i> Watch Demo
-                    </button>
-                </div>
-            </div>
-        </section>
-
-        <!-- Digital Humans Grid -->
-        <section style="padding: 6rem 0; background: var(--darker-bg);">
-            <div class="container">
-                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2.5rem;">
-                    <!-- Sample Digital Human Cards -->
-                    <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 20px; overflow: hidden; transition: all 0.3s ease; position: relative; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);" onmouseover="this.style.transform='translateY(-10px)'; this.style.borderColor='var(--primary)'; this.style.boxShadow='var(--glow-primary)'" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='var(--border-color)'; this.style.boxShadow='0 10px 30px rgba(0, 0, 0, 0.3)'">
-                        <div style="position: relative; height: 350px; overflow: hidden; background: var(--gradient-primary); display: flex; align-items: center; justify-content: center;">
-                            <i class="fas fa-user-astronaut" style="font-size: 4rem; color: white;"></i>
-                            <div style="position: absolute; top: 1rem; right: 1rem; background: rgba(16, 185, 129, 0.3); backdrop-filter: blur(10px); border: 1px solid var(--accent); border-radius: 30px; padding: 0.5rem 1rem; font-size: 0.8rem; color: var(--accent); display: flex; align-items: center; gap: 0.5rem;">
-                                <i class="fas fa-shield-alt"></i> Verified Identity
-                            </div>
-                        </div>
-                        <div style="padding: 1.5rem;">
-                            <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--text-primary); display: flex; align-items: center; gap: 0.5rem;">
-                                ALEXANDRA CHEN <span style="background: var(--gradient-primary); color: white; font-size: 0.8rem; padding: 0.25rem 0.75rem; border-radius: 30px;">MUSIC</span>
-                            </h3>
-                            <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">International pop sensation with over 50M records sold. Her digital persona captures her dynamic stage presence and vocal range.</p>
-                            
-                            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
-                                <div style="text-align: center; padding: 1rem; background: rgba(0, 212, 255, 0.05); border-radius: 8px;">
-                                    <div style="font-size: 1.2rem; font-weight: 700; color: var(--primary); margin-bottom: 0.25rem;">98.7%</div>
-                                    <div style="font-size: 0.8rem; color: var(--text-secondary);">Accuracy</div>
-                                </div>
-                                <div style="text-align: center; padding: 1rem; background: rgba(0, 212, 255, 0.05); border-radius: 8px;">
-                                    <div style="font-size: 1.2rem; font-weight: 700; color: var(--primary); margin-bottom: 0.25rem;">4.2M</div>
-                                    <div style="font-size: 0.8rem; color: var(--text-secondary);">Interactions</div>
-                                </div>
-                                <div style="text-align: center; padding: 1rem; background: rgba(0, 212, 255, 0.05); border-radius: 8px;">
-                                    <div style="font-size: 1.2rem; font-weight: 700; color: var(--primary); margin-bottom: 0.25rem;">24/7</div>
-                                    <div style="font-size: 0.8rem; color: var(--text-secondary);">Uptime</div>
-                                </div>
-                            </div>
-                            
-                            <div style="display: flex; justify-content: space-between;">
-                                <button style="background: transparent; color: var(--text-secondary); border: 1px solid var(--border-color); padding: 0.75rem 1.5rem; border-radius: 30px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; flex: 1; margin-right: 0.5rem;" onmouseover="this.style.borderColor='var(--primary)'; this.style.background='rgba(0, 212, 255, 0.1)'" onmouseout="this.style.borderColor='var(--border-color)'; this.style.background='transparent'">
-                                    <i class="fas fa-info-circle"></i> Details
-                                </button>
-                                <button style="background: var(--gradient-primary); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 30px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; flex: 1; margin-left: 0.5rem;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='var(--glow-primary)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
-                                    <i class="fas fa-comment"></i> Interact
-                                </button>
-                            </div>
-                        </div>
+                <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 stats-grid">
+                    <div class="stats-card">
+                        <i class="fas fa-robot"></i>
+                        <div class="number">∞</div>
+                        <div class="text-sm">AI工作時數</div>
                     </div>
-
-                    <!-- Additional Digital Human Cards -->
-                    <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 20px; overflow: hidden; transition: all 0.3s ease; position: relative; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);" onmouseover="this.style.transform='translateY(-10px)'; this.style.borderColor='var(--primary)'; this.style.boxShadow='var(--glow-primary)'" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='var(--border-color)'; this.style.boxShadow='0 10px 30px rgba(0, 0, 0, 0.3)'">
-                        <div style="position: relative; height: 350px; overflow: hidden; background: var(--gradient-primary); display: flex; align-items: center; justify-content: center;">
-                            <i class="fas fa-basketball-ball" style="font-size: 4rem; color: white;"></i>
-                            <div style="position: absolute; top: 1rem; right: 1rem; background: rgba(16, 185, 129, 0.3); backdrop-filter: blur(10px); border: 1px solid var(--accent); border-radius: 30px; padding: 0.5rem 1rem; font-size: 0.8rem; color: var(--accent); display: flex; align-items: center; gap: 0.5rem;">
-                                <i class="fas fa-shield-alt"></i> Verified Identity
-                            </div>
-                        </div>
-                        <div style="padding: 1.5rem;">
-                            <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--text-primary); display: flex; align-items: center; gap: 0.5rem;">
-                                MARCUS JOHNSON <span style="background: var(--gradient-primary); color: white; font-size: 0.8rem; padding: 0.25rem 0.75rem; border-radius: 30px;">SPORTS</span>
-                            </h3>
-                            <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">NBA superstar with 5 championship titles. His digital twin captures his athleticism, leadership, and charismatic personality.</p>
-                            
-                            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
-                                <div style="text-align: center; padding: 1rem; background: rgba(0, 212, 255, 0.05); border-radius: 8px;">
-                                    <div style="font-size: 1.2rem; font-weight: 700; color: var(--primary); margin-bottom: 0.25rem;">99.1%</div>
-                                    <div style="font-size: 0.8rem; color: var(--text-secondary);">Accuracy</div>
-                                </div>
-                                <div style="text-align: center; padding: 1rem; background: rgba(0, 212, 255, 0.05); border-radius: 8px;">
-                                    <div style="font-size: 1.2rem; font-weight: 700; color: var(--primary); margin-bottom: 0.25rem;">3.8M</div>
-                                    <div style="font-size: 0.8rem; color: var(--text-secondary);">Interactions</div>
-                                </div>
-                                <div style="text-align: center; padding: 1rem; background: rgba(0, 212, 255, 0.05); border-radius: 8px;">
-                                    <div style="font-size: 1.2rem; font-weight: 700; color: var(--primary); margin-bottom: 0.25rem;">24/7</div>
-                                    <div style="font-size: 0.8rem; color: var(--text-secondary);">Uptime</div>
-                                </div>
-                            </div>
-                            
-                            <div style="display: flex; justify-content: space-between;">
-                                <button style="background: transparent; color: var(--text-secondary); border: 1px solid var(--border-color); padding: 0.75rem 1.5rem; border-radius: 30px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; flex: 1; margin-right: 0.5rem;" onmouseover="this.style.borderColor='var(--primary)'; this.style.background='rgba(0, 212, 255, 0.1)'" onmouseout="this.style.borderColor='var(--border-color)'; this.style.background='transparent'">
-                                    <i class="fas fa-info-circle"></i> Details
-                                </button>
-                                <button style="background: var(--gradient-primary); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 30px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; flex: 1; margin-left: 0.5rem;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='var(--glow-primary)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
-                                    <i class="fas fa-comment"></i> Interact
-                                </button>
-                            </div>
-                        </div>
+                    <div class="stats-card">
+                        <i class="fas fa-shield-alt"></i>
+                        <div class="number">0</div>
+                        <div class="text-sm">風險等級</div>
                     </div>
-
-                    <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 20px; overflow: hidden; transition: all 0.3s ease; position: relative; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);" onmouseover="this.style.transform='translateY(-10px)'; this.style.borderColor='var(--primary)'; this.style.boxShadow='var(--glow-primary)'" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='var(--border-color)'; this.style.boxShadow='0 10px 30px rgba(0, 0, 0, 0.3)'">
-                        <div style="position: relative; height: 350px; overflow: hidden; background: var(--gradient-primary); display: flex; align-items: center; justify-content: center;">
-                            <i class="fas fa-film" style="font-size: 4rem; color: white;"></i>
-                            <div style="position: absolute; top: 1rem; right: 1rem; background: rgba(16, 185, 129, 0.3); backdrop-filter: blur(10px); border: 1px solid var(--accent); border-radius: 30px; padding: 0.5rem 1rem; font-size: 0.8rem; color: var(--accent); display: flex; align-items: center; gap: 0.5rem;">
-                                <i class="fas fa-shield-alt"></i> Verified Identity
-                            </div>
-                        </div>
-                        <div style="padding: 1.5rem;">
-                            <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--text-primary); display: flex; align-items: center; gap: 0.5rem;">
-                                SOFIA RAMIREZ <span style="background: var(--gradient-primary); color: white; font-size: 0.8rem; padding: 0.25rem 0.75rem; border-radius: 30px;">FILM & TV</span>
-                            </h3>
-                            <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">Academy Award-winning actress known for her versatile roles. Her digital persona captures her emotional depth and acting range.</p>
-                            
-                            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
-                                <div style="text-align: center; padding: 1rem; background: rgba(0, 212, 255, 0.05); border-radius: 8px;">
-                                    <div style="font-size: 1.2rem; font-weight: 700; color: var(--primary); margin-bottom: 0.25rem;">97.9%</div>
-                                    <div style="font-size: 0.8rem; color: var(--text-secondary);">Accuracy</div>
-                                </div>
-                                <div style="text-align: center; padding: 1rem; background: rgba(0, 212, 255, 0.05); border-radius: 8px;">
-                                    <div style="font-size: 1.2rem; font-weight: 700; color: var(--primary); margin-bottom: 0.25rem;">2.9M</div>
-                                    <div style="font-size: 0.8rem; color: var(--text-secondary);">Interactions</div>
-                                </div>
-                                <div style="text-align: center; padding: 1rem; background: rgba(0, 212, 255, 0.05); border-radius: 8px;">
-                                    <div style="font-size: 1.2rem; font-weight: 700; color: var(--primary); margin-bottom: 0.25rem;">24/7</div>
-                                    <div style="font-size: 0.8rem; color: var(--text-secondary);">Uptime</div>
-                                </div>
-                            </div>
-                            
-                            <div style="display: flex; justify-content: space-between;">
-                                <button style="background: transparent; color: var(--text-secondary); border: 1px solid var(--border-color); padding: 0.75rem 1.5rem; border-radius: 30px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; flex: 1; margin-right: 0.5rem;" onmouseover="this.style.borderColor='var(--primary)'; this.style.background='rgba(0, 212, 255, 0.1)'" onmouseout="this.style.borderColor='var(--border-color)'; this.style.background='transparent'">
-                                    <i class="fas fa-info-circle"></i> Details
-                                </button>
-                                <button style="background: var(--gradient-primary); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 30px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; flex: 1; margin-left: 0.5rem;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='var(--glow-primary)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
-                                    <i class="fas fa-comment"></i> Interact
-                                </button>
-                            </div>
-                        </div>
+                    <div class="stats-card">
+                        <i class="fas fa-coins"></i>
+                        <div class="number">90%</div>
+                        <div class="text-sm">成本降低</div>
+                    </div>
+                    <div class="stats-card">
+                        <i class="fas fa-infinity"></i>
+                        <div class="number">100%</div>
+                        <div class="text-sm">創意自由</div>
                     </div>
                 </div>
             </div>
-        </section>
-    </div>
+        </div>
+    </section>
 
-    <!-- Platform Page -->
-    <div class="page-container" id="platform-page">
-        <section style="min-height: 70vh; display: flex; align-items: center; position: relative; padding-top: 100px; text-align: center;">
-            <div class="container">
-                <h1 style="font-family: 'Orbitron', monospace; font-size: 4rem; font-weight: 900; line-height: 1.1; margin-bottom: 2rem; background: var(--gradient-text); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; text-shadow: var(--glow-primary);">Platform Technology & Ecosystem</h1>
-                <p style="font-size: 1.5rem; color: var(--text-secondary); margin-bottom: 3rem; font-weight: 300; line-height: 1.6; max-width: 800px; margin-left: auto; margin-right: auto;">
-                    Discover the revolutionary architecture powering StarOS - the world's first digital human agency platform.
+    <!-- Vision & Mission -->
+    <section class="py-20" id="vision">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16 animate-fade-in">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">願景與使命</h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto mobile-optimized">
+                    隨著AI原生時代的到來，我們正在建立明星價值遷移的橋樑，確保每位明星在數位世界中保持並擴大影響力。
                 </p>
-                <div style="display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap;">
-                    <button class="btn-primary">
-                        <i class="fas fa-rocket"></i> Explore Platform
-                    </button>
-                    <button class="btn-secondary">
-                        <i class="fas fa-file-alt"></i> Read Whitepaper
-                    </button>
-                </div>
             </div>
-        </section>
-
-        <section style="padding: 6rem 0; background: linear-gradient(180deg, var(--dark-bg) 0%, var(--darker-bg) 100%);">
-            <div class="container">
-                <div class="section-header">
-                    <div class="badge">Technical Architecture</div>
-                    <h2>Multi-Layer Platform Architecture</h2>
-                    <p>StarOS is built on a sophisticated multi-layer architecture that integrates cutting-edge AI, blockchain, and cloud technologies.</p>
-                </div>
-                
-                <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 20px; padding: 3rem; position: relative; overflow: hidden; backdrop-filter: blur(20px);">
-                    <!-- AI Layer -->
-                    <div style="padding: 2rem; margin-bottom: 2rem; border-radius: 16px; border: 1px solid rgba(0, 212, 255, 0.2); position: relative; transition: all 0.3s ease;" onmouseover="this.style.borderColor='var(--primary)'; this.style.boxShadow='var(--glow-primary)'" onmouseout="this.style.borderColor='rgba(0, 212, 255, 0.2)'; this.style.boxShadow='none'">
-                        <div style="display: flex; align-items: center; margin-bottom: 1.5rem;">
-                            <div style="width: 60px; height: 60px; background: var(--gradient-primary); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-right: 1.5rem; font-size: 1.5rem; color: white;">
-                                <i class="fas fa-brain"></i>
-                            </div>
-                            <div style="font-size: 1.8rem; font-weight: 700; color: var(--text-primary);">AI Intelligence Layer</div>
-                        </div>
-                        <div style="color: var(--text-secondary); margin-bottom: 1.5rem; line-height: 1.7;">
-                            The foundation of StarOS, enabling realistic digital human creation, behavior simulation, and personalized interactions through advanced machine learning models.
-                        </div>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
-                            <div style="background: rgba(0, 212, 255, 0.05); border: 1px solid rgba(0, 212, 255, 0.1); border-radius: 12px; padding: 1.5rem; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.borderColor='var(--primary)'; this.style.boxShadow='var(--glow-primary)'" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='rgba(0, 212, 255, 0.1)'; this.style.boxShadow='none'">
-                                <h4 style="font-size: 1.2rem; margin-bottom: 0.5rem; color: var(--primary);">Digital Human Creation</h4>
-                                <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6;">Advanced neural networks for realistic avatar generation and animation</p>
-                            </div>
-                            <div style="background: rgba(0, 212, 255, 0.05); border: 1px solid rgba(0, 212, 255, 0.1); border-radius: 12px; padding: 1.5rem; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.borderColor='var(--primary)'; this.style.boxShadow='var(--glow-primary)'" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='rgba(0, 212, 255, 0.1)'; this.style.boxShadow='none'">
-                                <h4 style="font-size: 1.2rem; margin-bottom: 0.5rem; color: var(--primary);">Personality Modeling</h4>
-                                <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6;">AI systems that capture and replicate unique personality traits</p>
-                            </div>
-                            <div style="background: rgba(0, 212, 255, 0.05); border: 1px solid rgba(0, 212, 255, 0.1); border-radius: 12px; padding: 1.5rem; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.borderColor='var(--primary)'; this.style.boxShadow='var(--glow-primary)'" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='rgba(0, 212, 255, 0.1)'; this.style.boxShadow='none'">
-                                <h4 style="font-size: 1.2rem; margin-bottom: 0.5rem; color: var(--primary);">Natural Interaction</h4>
-                                <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6;">Conversational AI with emotional intelligence and contextual awareness</p>
-                            </div>
-                            <div style="background: rgba(0, 212, 255, 0.05); border: 1px solid rgba(0, 212, 255, 0.1); border-radius: 12px; padding: 1.5rem; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.borderColor='var(--primary)'; this.style.boxShadow='var(--glow-primary)'" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='rgba(0, 212, 255, 0.1)'; this.style.boxShadow='none'">
-                                <h4 style="font-size: 1.2rem; margin-bottom: 0.5rem; color: var(--primary);">Continuous Learning</h4>
-                                <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6;">Reinforcement learning systems that evolve through interactions</p>
-                            </div>
-                        </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
+                <div class="value-proposition animate-slide-up">
+                    <div class="feature-icon">
+                        <i class="fas fa-star"></i>
                     </div>
-                    
-                    <!-- Blockchain Layer -->
-                    <div style="padding: 2rem; margin-bottom: 2rem; border-radius: 16px; border: 1px solid rgba(0, 212, 255, 0.2); position: relative; transition: all 0.3s ease;" onmouseover="this.style.borderColor='var(--primary)'; this.style.boxShadow='var(--glow-primary)'" onmouseout="this.style.borderColor='rgba(0, 212, 255, 0.2)'; this.style.boxShadow='none'">
-                        <div style="display: flex; align-items: center; margin-bottom: 1.5rem;">
-                            <div style="width: 60px; height: 60px; background: var(--gradient-primary); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-right: 1.5rem; font-size: 1.5rem; color: white;">
-                                <i class="fas fa-link"></i>
-                            </div>
-                            <div style="font-size: 1.8rem; font-weight: 700; color: var(--text-primary);">Blockchain Trust Layer</div>
-                        </div>
-                        <div style="color: var(--text-secondary); margin-bottom: 1.5rem; line-height: 1.7;">
-                            Ensures authenticity, security, and transparent value distribution through decentralized technologies and smart contracts.
-                        </div>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
-                            <div style="background: rgba(0, 212, 255, 0.05); border: 1px solid rgba(0, 212, 255, 0.1); border-radius: 12px; padding: 1.5rem; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.borderColor='var(--primary)'; this.style.boxShadow='var(--glow-primary)'" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='rgba(0, 212, 255, 0.1)'; this.style.boxShadow='none'">
-                                <h4 style="font-size: 1.2rem; margin-bottom: 0.5rem; color: var(--primary);">Digital Identity</h4>
-                                <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6;">Verifiable credentials for authenticating digital humans</p>
-                            </div>
-                            <div style="background: rgba(0, 212, 255, 0.05); border: 1px solid rgba(0, 212, 255, 0.1); border-radius: 12px; padding: 1.5rem; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.borderColor='var(--primary)'; this.style.boxShadow='var(--glow-primary)'" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='rgba(0, 212, 255, 0.1)'; this.style.boxShadow='none'">
-                                <h4 style="font-size: 1.2rem; margin-bottom: 0.5rem; color: var(--primary);">Smart Contracts</h4>
-                                <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6;">Automated agreements for rights management and revenue sharing</p>
-                            </div>
-                            <div style="background: rgba(0, 212, 255, 0.05); border: 1px solid rgba(0, 212, 255, 0.1); border-radius: 12px; padding: 1.5rem; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.borderColor='var(--primary)'; this.style.boxShadow='var(--glow-primary)'" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='rgba(0, 212, 255, 0.1)'; this.style.boxShadow='none'">
-                                <h4 style="font-size: 1.2rem; margin-bottom: 0.5rem; color: var(--primary);">Value Distribution</h4>
-                                <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6;">Token-based economy for fair compensation and rewards</p>
-                            </div>
-                            <div style="background: rgba(0, 212, 255, 0.05); border: 1px solid rgba(0, 212, 255, 0.1); border-radius: 12px; padding: 1.5rem; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.borderColor='var(--primary)'; this.style.boxShadow='var(--glow-primary)'" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='rgba(0, 212, 255, 0.1)'; this.style.boxShadow='none'">
-                                <h4 style="font-size: 1.2rem; margin-bottom: 0.5rem; color: var(--primary);">Content Provenance</h4>
-                                <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6;">Immutable records for content creation and usage rights</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
-
-    <!-- Marketplace Page -->
-    <div class="page-container" id="marketplace-page">
-        <section style="padding: 4rem 0 6rem; background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(124, 58, 237, 0.1) 100%); position: relative;">
-            <div class="container" style="text-align: center;">
-                <div style="display: inline-block; background: var(--glass-bg); border: 1px solid var(--primary); color: var(--primary); padding: 0.75rem 2rem; border-radius: 30px; font-size: 0.9rem; font-weight: 600; margin-bottom: 2rem; text-transform: uppercase; letter-spacing: 1px;">
-                    <i class="fas fa-robot"></i> AI-Powered Marketplace
-                </div>
-                <h1 style="font-family: 'Orbitron', monospace; font-size: 4rem; font-weight: 900; line-height: 1.1; margin-bottom: 1.5rem; background: var(--gradient-text); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; text-shadow: var(--glow-primary);">Digital Celebrity Assets & NFT Trading Hub</h1>
-                <p style="font-size: 1.5rem; color: var(--text-secondary); margin-bottom: 3rem; max-width: 800px; margin-left: auto; margin-right: auto;">
-                    The world's first AI-native marketplace for celebrity digital humans, exclusive NFTs, community tokens, and interactive experiences.
-                </p>
-
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin: 4rem 0; max-width: 1000px; margin-left: auto; margin-right: auto;">
-                    <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 2rem; text-align: center; position: relative; overflow: hidden; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.borderColor='var(--primary)'; this.style.boxShadow='var(--glow-primary)'" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='var(--border-color)'; this.style.boxShadow='none'">
-                        <div style="position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.1), transparent); transition: left 0.8s ease;"></div>
-                        <div style="font-family: 'Orbitron', monospace; font-size: 2.5rem; font-weight: 900; color: var(--primary); margin-bottom: 0.5rem;">$125M+</div>
-                        <div style="color: var(--text-secondary); font-weight: 500;">Total Volume Traded</div>
-                    </div>
-                    <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 2rem; text-align: center; position: relative; overflow: hidden; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.borderColor='var(--primary)'; this.style.boxShadow='var(--glow-primary)'" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='var(--border-color)'; this.style.boxShadow='none'">
-                        <div style="font-family: 'Orbitron', monospace; font-size: 2.5rem; font-weight: 900; color: var(--primary); margin-bottom: 0.5rem;">890K+</div>
-                        <div style="color: var(--text-secondary); font-weight: 500;">Unique NFTs Listed</div>
-                    </div>
-                    <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 2rem; text-align: center; position: relative; overflow: hidden; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.borderColor='var(--primary)'; this.style.boxShadow='var(--glow-primary)'" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='var(--border-color)'; this.style.boxShadow='none'">
-                        <div style="font-family: 'Orbitron', monospace; font-size: 2.5rem; font-weight: 900; color: var(--primary); margin-bottom: 0.5rem;">450+</div>
-                        <div style="color: var(--text-secondary); font-weight: 500;">Verified Celebrities</div>
-                    </div>
-                    <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 2rem; text-align: center; position: relative; overflow: hidden; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.borderColor='var(--primary)'; this.style.boxShadow='var(--glow-primary)'" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='var(--border-color)'; this.style.boxShadow='none'">
-                        <div style="font-family: 'Orbitron', monospace; font-size: 2.5rem; font-weight: 900; color: var(--primary); margin-bottom: 0.5rem;">2.1M+</div>
-                        <div style="color: var(--text-secondary); font-weight: 500;">Active Traders</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- NFT Grid Section -->
-        <section style="padding: 6rem 0; background: var(--darker-bg);">
-            <div class="container">
-                <div class="section-header">
-                    <h2>Live Marketplace</h2>
-                    <p>Browse the latest digital celebrity assets, interactive experiences, and exclusive content from verified creators worldwide.</p>
-                </div>
-
-                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem;">
-                    <!-- Sample NFT Cards -->
-                    <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; overflow: hidden; transition: all 0.3s ease; position: relative;" onmouseover="this.style.transform='translateY(-5px)'; this.style.borderColor='var(--primary)'; this.style.boxShadow='var(--glow-primary)'" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='var(--border-color)'; this.style.boxShadow='none'">
-                        <div style="aspect-ratio: 1; background: var(--gradient-card); position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center;">
-                            <div style="position: absolute; top: 1rem; left: 1rem; background: var(--gradient-primary); color: white; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; z-index: 2;">Exclusive</div>
-                            <i class="fas fa-user-astronaut" style="font-size: 4rem; color: rgba(255, 255, 255, 0.8); z-index: 2;"></i>
-                        </div>
-                        <div style="padding: 1.5rem;">
-                            <h3 style="font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-primary);">Personal AI Assistant #0001</h3>
-                            <p style="color: var(--primary); font-size: 0.9rem; margin-bottom: 1rem;">by @GlobalSuperstar_Official</p>
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                                <div>
-                                    <span style="font-size: 0.8rem; color: var(--text-muted);">Access Price</span>
-                                    <span style="font-family: 'Orbitron', monospace; font-size: 1.1rem; font-weight: 700; color: var(--primary); display: block;">3.5 ETH</span>
-                                </div>
-                                <div>
-                                    <span style="font-size: 0.8rem; color: var(--text-muted);">Features</span>
-                                    <span style="font-family: 'Orbitron', monospace; font-size: 1.1rem; font-weight: 700; color: var(--primary); display: block;">Premium</span>
-                                </div>
-                            </div>
-                            <div style="display: flex; gap: 0.75rem;">
-                                <button style="flex: 1; background: var(--gradient-primary); color: white; border: none; padding: 0.75rem; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; font-size: 0.9rem;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='var(--glow-primary)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">Buy Now</button>
-                                <button style="background: var(--glass-bg); border: 1px solid var(--border-color); color: var(--text-secondary); padding: 0.75rem; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; width: 44px; display: flex; align-items: center; justify-content: center;" onmouseover="this.style.borderColor='var(--danger)'; this.style.color='var(--danger)'" onmouseout="this.style.borderColor='var(--border-color)'; this.style.color='var(--text-secondary)'">
-                                    <i class="fas fa-heart"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; overflow: hidden; transition: all 0.3s ease; position: relative;" onmouseover="this.style.transform='translateY(-5px)'; this.style.borderColor='var(--primary)'; this.style.boxShadow='var(--glow-primary)'" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='var(--border-color)'; this.style.boxShadow='none'">
-                        <div style="aspect-ratio: 1; background: var(--gradient-card); position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center;">
-                            <div style="position: absolute; top: 1rem; left: 1rem; background: var(--gradient-primary); color: white; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; z-index: 2;">Live Auction</div>
-                            <i class="fas fa-microphone" style="font-size: 4rem; color: rgba(255, 255, 255, 0.8); z-index: 2;"></i>
-                        </div>
-                        <div style="padding: 1.5rem;">
-                            <h3 style="font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-primary);">Virtual Concert Experience</h3>
-                            <p style="color: var(--primary); font-size: 0.9rem; margin-bottom: 1rem;">by @MetaMusicStar</p>
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                                <div>
-                                    <span style="font-size: 0.8rem; color: var(--text-muted);">Highest Bid</span>
-                                    <span style="font-family: 'Orbitron', monospace; font-size: 1.1rem; font-weight: 700; color: var(--primary); display: block;">8.7 ETH</span>
-                                </div>
-                                <div>
-                                    <span style="font-size: 0.8rem; color: var(--text-muted);">Time Left</span>
-                                    <span style="font-family: 'Orbitron', monospace; font-size: 1.1rem; font-weight: 700; color: var(--primary); display: block;">2h 34m</span>
-                                </div>
-                            </div>
-                            <div style="display: flex; gap: 0.75rem;">
-                                <button style="flex: 1; background: var(--gradient-primary); color: white; border: none; padding: 0.75rem; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; font-size: 0.9rem;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='var(--glow-primary)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">Place Bid</button>
-                                <button style="background: var(--glass-bg); border: 1px solid var(--border-color); color: var(--text-secondary); padding: 0.75rem; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; width: 44px; display: flex; align-items: center; justify-content: center;" onmouseover="this.style.borderColor='var(--danger)'; this.style.color='var(--danger)'" onmouseout="this.style.borderColor='var(--border-color)'; this.style.color='var(--text-secondary)'">
-                                    <i class="fas fa-heart"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; overflow: hidden; transition: all 0.3s ease; position: relative;" onmouseover="this.style.transform='translateY(-5px)'; this.style.borderColor='var(--primary)'; this.style.boxShadow='var(--glow-primary)'" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='var(--border-color)'; this.style.boxShadow='none'">
-                        <div style="aspect-ratio: 1; background: var(--gradient-card); position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center;">
-                            <div style="position: absolute; top: 1rem; left: 1rem; background: var(--gradient-primary); color: white; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; z-index: 2;">Verified</div>
-                            <i class="fas fa-film" style="font-size: 4rem; color: rgba(255, 255, 255, 0.8); z-index: 2;"></i>
-                        </div>
-                        <div style="padding: 1.5rem;">
-                            <h3 style="font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-primary);">Behind The Scenes Access</h3>
-                            <p style="color: var(--primary); font-size: 0.9rem; margin-bottom: 1rem;">by @HollywoodLegend</p>
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                                <div>
-                                    <span style="font-size: 0.8rem; color: var(--text-muted);">Fixed Price</span>
-                                    <span style="font-family: 'Orbitron', monospace; font-size: 1.1rem; font-weight: 700; color: var(--primary); display: block;">5.2 ETH</span>
-                                </div>
-                                <div>
-                                    <span style="font-size: 0.8rem; color: var(--text-muted);">Editions</span>
-                                    <span style="font-family: 'Orbitron', monospace; font-size: 1.1rem; font-weight: 700; color: var(--primary); display: block;">47/100</span>
-                                </div>
-                            </div>
-                            <div style="display: flex; gap: 0.75rem;">
-                                <button style="flex: 1; background: var(--gradient-primary); color: white; border: none; padding: 0.75rem; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; font-size: 0.9rem;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='var(--glow-primary)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">Buy Now</button>
-                                <button style="background: var(--glass-bg); border: 1px solid var(--danger); color: var(--danger); padding: 0.75rem; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; width: 44px; display: flex; align-items: center; justify-content: center; background: rgba(239, 68, 68, 0.1);" onmouseover="this.style.borderColor='var(--danger)'; this.style.color='var(--danger)'" onmouseout="this.style.borderColor='var(--danger)'; this.style.color='var(--danger)'">
-                                    <i class="fas fa-heart"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
-
-    <!-- Legal Page -->
-    <div class="page-container" id="legal-page">
-        <section style="min-height: 70vh; display: flex; align-items: center; position: relative; padding-top: 100px; text-align: center;">
-            <div class="container">
-                <h1 style="font-family: 'Orbitron', monospace; font-size: 4rem; font-weight: 900; line-height: 1.1; margin-bottom: 2rem; background: var(--gradient-text); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; text-shadow: var(--glow-primary);">Legal & Compliance</h1>
-                <p style="font-size: 1.5rem; color: var(--text-secondary); margin-bottom: 3rem; font-weight: 300; line-height: 1.6; max-width: 800px; margin-left: auto; margin-right: auto;">
-                    Ensuring regulatory compliance and protecting intellectual property rights in the digital human ecosystem.
-                </p>
-                
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin: 4rem 0;">
-                    <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 2rem; text-align: left; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.borderColor='var(--primary)'; this.style.boxShadow='var(--glow-primary)'" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='var(--border-color)'; this.style.boxShadow='none'">
-                        <div style="font-size: 2.5rem; margin-bottom: 1rem; color: var(--primary);">
-                            <i class="fas fa-balance-scale"></i>
-                        </div>
-                        <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem; color: var(--text-primary);">Digital Rights Management</h3>
-                        <p style="color: var(--text-secondary); line-height: 1.7;">
-                            Our comprehensive DRM system ensures that digital human likenesses and content are protected and monetized appropriately.
-                        </p>
-                    </div>
-                    
-                    <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 2rem; text-align: left; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.borderColor='var(--primary)'; this.style.boxShadow='var(--glow-primary)'" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='var(--border-color)'; this.style.boxShadow='none'">
-                        <div style="font-size: 2.5rem; margin-bottom: 1rem; color: var(--primary);">
-                            <i class="fas fa-file-contract"></i>
-                        </div>
-                        <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem; color: var(--text-primary);">Smart Contract Framework</h3>
-                        <p style="color: var(--text-secondary); line-height: 1.7;">
-                            Automated, legally-binding agreements that govern all interactions and transactions within the StarOS ecosystem.
-                        </p>
-                    </div>
-                    
-                    <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 2rem; text-align: left; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.borderColor='var(--primary)'; this.style.boxShadow='var(--glow-primary)'" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='var(--border-color)'; this.style.boxShadow='none'">
-                        <div style="font-size: 2.5rem; margin-bottom: 1rem; color: var(--primary);">
-                            <i class="fas fa-shield-alt"></i>
-                        </div>
-                        <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem; color: var(--text-primary);">Compliance & Regulations</h3>
-                        <p style="color: var(--text-secondary); line-height: 1.7;">
-                            Adherence to global regulations including GDPR, CCPA, and emerging AI governance frameworks.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
-
-    <!-- Social Page -->
-    <div class="page-container" id="social-page">
-        <section style="min-height: 70vh; display: flex; align-items: center; position: relative; padding-top: 100px; text-align: center;">
-            <div class="container">
-                <h1 style="font-family: 'Orbitron', monospace; font-size: 4rem; font-weight: 900; line-height: 1.1; margin-bottom: 2rem; background: var(--gradient-text); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; text-shadow: var(--glow-primary);">Social & Community</h1>
-                <p style="font-size: 1.5rem; color: var(--text-secondary); margin-bottom: 3rem; font-weight: 300; line-height: 1.6; max-width: 800px; margin-left: auto; margin-right: auto;">
-                    Join the global community of creators, celebrities, and fans shaping the future of digital human interaction.
-                </p>
-                
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin: 4rem 0;">
-                    <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 2rem; text-align: center; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.borderColor='var(--primary)'; this.style.boxShadow='var(--glow-primary)'" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='var(--border-color)'; this.style.boxShadow='none'">
-                        <div style="font-family: 'Orbitron', monospace; font-size: 2.5rem; font-weight: 900; color: var(--primary); margin-bottom: 0.5rem;">500K+</div>
-                        <div style="color: var(--text-secondary); font-weight: 500;">Community Members</div>
-                    </div>
-                    <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 2rem; text-align: center; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.borderColor='var(--primary)'; this.style.boxShadow='var(--glow-primary)'" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='var(--border-color)'; this.style.boxShadow='none'">
-                        <div style="font-family: 'Orbitron', monospace; font-size: 2.5rem; font-weight: 900; color: var(--primary); margin-bottom: 0.5rem;">24/7</div>
-                        <div style="color: var(--text-secondary); font-weight: 500;">Live Events</div>
-                    </div>
-                    <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 2rem; text-align: center; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.borderColor='var(--primary)'; this.style.boxShadow='var(--glow-primary)'" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='var(--border-color)'; this.style.boxShadow='none'">
-                        <div style="font-family: 'Orbitron', monospace; font-size: 2.5rem; font-weight: 900; color: var(--primary); margin-bottom: 0.5rem;">100+</div>
-                        <div style="color: var(--text-secondary); font-weight: 500;">Community Projects</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
-
-    <!-- Wallet Page -->
-    <div class="page-container" id="wallet-page">
-        <section style="min-height: 70vh; display: flex; align-items: center; position: relative; padding-top: 100px;">
-            <div class="container">
-                <h1 style="font-family: 'Orbitron', monospace; font-size: 4rem; font-weight: 900; line-height: 1.1; margin-bottom: 2rem; background: var(--gradient-text); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; text-shadow: var(--glow-primary); text-align: center;">Digital Wallet</h1>
-                <p style="font-size: 1.5rem; color: var(--text-secondary); margin-bottom: 3rem; font-weight: 300; line-height: 1.6; max-width: 800px; margin-left: auto; margin-right: auto; text-align: center;">
-                    Manage your digital assets, interact with celebrities, and participate in the StarOS ecosystem.
-                </p>
-                
-                <div class="wallet-section">
-                    <div class="wallet-grid">
-                        <div class="wallet-card">
-                            <div style="display: flex; align-items: center; margin-bottom: 1.5rem;">
-                                <div style="width: 50px; height: 50px; background: var(--gradient-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 1rem; font-size: 1.5rem; color: white;">
-                                    <i class="fas fa-coins"></i>
-                                </div>
-                                <div>
-                                    <h3 style="font-size: 1.5rem; font-weight: 700; color: var(--text-primary);">Asset Management</h3>
-                                    <p style="color: var(--text-secondary);">Securely store and manage all your digital assets</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="wallet-card">
-                            <div style="display: flex; align-items: center; margin-bottom: 1.5rem;">
-                                <div style="width: 50px; height: 50px; background: var(--gradient-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 1rem; font-size: 1.5rem; color: white;">
-                                    <i class="fas fa-exchange-alt"></i>
-                                </div>
-                                <div>
-                                    <h3 style="font-size: 1.5rem; font-weight: 700; color: var(--text-primary);">Transactions</h3>
-                                    <p style="color: var(--text-secondary);">Fast, secure transactions with minimal fees</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="wallet-card">
-                            <div style="display: flex; align-items: center; margin-bottom: 1.5rem;">
-                                <div style="width: 50px; height: 50px; background: var(--gradient-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 1rem; font-size: 1.5rem; color: white;">
-                                    <i class="fas fa-user-friends"></i>
-                                </div>
-                                <div>
-                                    <h3 style="font-size: 1.5rem; font-weight: 700; color: var(--text-primary);">Interactions</h3>
-                                    <p style="color: var(--text-secondary);">Access exclusive celebrity interactions</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="wallet-card">
-                            <div style="display: flex; align-items: center; margin-bottom: 1.5rem;">
-                                <div style="width: 50px; height: 50px; background: var(--gradient-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 1rem; font-size: 1.5rem; color: white;">
-                                    <i class="fas fa-ticket-alt"></i>
-                                </div>
-                                <div>
-                                    <h3 style="font-size: 1.5rem; font-weight: 700; color: var(--text-primary);">Experiences</h3>
-                                    <p style="color: var(--text-secondary);">Redeem exclusive experiences and content</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div style="text-align: center; margin-top: 3rem;">
-                        <button class="btn-primary" style="margin: 0 auto;">
-                            <i class="fas fa-wallet"></i> Connect Wallet
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-content">
-                <div class="footer-brand">
-                    <a href="#" class="logo">StarOS</a>
-                    <p>Revolutionizing celebrity value preservation and activation in the AI-native era through comprehensive digital human solutions.</p>
-                    <div class="footer-social">
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-discord"></i></a>
-                        <a href="#"><i class="fab fa-telegram"></i></a>
-                        <a href="#"><i class="fab fa-medium"></i></a>
-                        <a href="#"><i class="fab fa-github"></i></a>
-                    </div>
-                </div>
-                
-                <div class="footer-section">
-                    <h4>Platform</h4>
-                    <ul>
-                        <li><a href="#">Digital Humans</a></li>
-                        <li><a href="#">Technology</a></li>
-                        <li><a href="#">Marketplace</a></li>
-                        <li><a href="#">Community</a></li>
-                        <li><a href="#">Governance</a></li>
+                    <h3 class="text-2xl font-bold mb-4 gradient-text">對於明星</h3>
+                    <p class="text-gray-300 mb-4 mobile-optimized">將現實世界價值戰略性遷移至AI原生世界，在AI主導的未來保存並擴大影響力。</p>
+                    <ul class="space-y-2 text-sm text-gray-400 mobile-optimized">
+                        <li><i class="fas fa-check text-accent mr-2"></i>零日程衝突</li>
+                        <li><i class="fas fa-check text-accent mr-2"></i>無安全顧慮</li>
+                        <li><i class="fas fa-check text-accent mr-2"></i>90%+ 成本降低</li>
+                        <li><i class="fas fa-check text-accent mr-2"></i>數位永生</li>
                     </ul>
                 </div>
                 
-                <div class="footer-section">
-                    <h4>Resources</h4>
-                    <ul>
-                        <li><a href="#">Documentation</a></li>
-                        <li><a href="#">Whitepaper</a></li>
-                        <li><a href="#">API</a></li>
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="#">Tutorials</a></li>
+                <div class="value-proposition animate-slide-up" style="animation-delay: 0.2s;">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 gradient-text">對於粉絲社群</h3>
+                    <p class="text-gray-300 mb-4 mobile-optimized">從被動消費轉變為積極參與和共同創造，成為數位生態系統的利益相關者。</p>
+                    <ul class="space-y-2 text-sm text-gray-400 mobile-optimized">
+                        <li><i class="fas fa-check text-accent mr-2"></i>真正的雙向互動</li>
+                        <li><i class="fas fa-check text-accent mr-2"></i>價值共創機制</li>
+                        <li><i class="fas fa-check text-accent mr-2"></i>社群治理權利</li>
+                        <li><i class="fas fa-check text-accent mr-2"></i>獨家數位收藏品</li>
                     </ul>
                 </div>
                 
-                <div class="footer-section">
-                    <h4>Company</h4>
-                    <ul>
-                        <li><a href="#">About</a></li>
-                        <li><a href="#">Team</a></li>
-                        <li><a href="#">Careers</a></li>
-                        <li><a href="#">Partners</a></li>
-                        <li><a href="#">Contact</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h4>Legal</h4>
-                    <ul>
-                        <极>
-                            <a href="#">Terms of Service</a>
-                        </li>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Cookie Policy</a></li>
-                        <li><a href="#">Intellectual Property</a></li>
-                        <li><a href="#">Compliance</a></li>
+                <div class="value-proposition animate-slide-up" style="animation-delay: 0.4s;">
+                    <div class="feature-icon">
+                        <i class="fas fa-film"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 gradient-text">對於內容創作者</h3>
+                    <p class="text-gray-300 mb-4 mobile-optimized">突破現實世界限制，實現真正無界的創意，隨時隨地在任何場景下創作。</p>
+                    <ul class="space-y-2 text-sm text-gray-400 mobile-optimized">
+                        <li><i class="fas fa-check text-accent mr-2"></i>完全自由的日程</li>
+                        <li><i class="fas fa-check text-accent mr-2"></i>零風險內容生產</li>
+                        <li><i class="fas fa-check text-accent mr-2"></i>無限創意擴展</li>
+                        <li><i class="fas fa-check text-accent mr-2"></i>顯著成本降低</li>
                     </ul>
                 </div>
             </div>
             
-            <div class="footer-bottom">
-                <p>&copy; 2025 StarOS. All rights reserved.</p>
-                <div class="footer-legal">
-                    <a href="#">Privacy Policy</a>
-                    <a href="#">Terms of Service</a>
-                    <a href="#">Cookie Settings</a>
+            <div class="section-divider"></div>
+        </div>
+    </section>
+
+    <!-- AI Native Era Challenges -->
+    <section class="py-20 bg-gradient-to-b from-transparent to-gray-900" id="challenges">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16 animate-fade-in">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">AI原生時代的挑戰</h2>
+                <p class="text-xl text-gray-300 max-w-4xl mx-auto mobile-optimized">
+                    人類正處於歷史轉折點：AI原生內容將主導數位世界，而傳統明星面臨邊緣化風險。
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+                <div class="animate-slide-right">
+                    <h3 class="text-3xl font-bold mb-8 gradient-text">對傳統娛樂的影響</h3>
+                    
+                    <div class="challenge-item">
+                        <h4 class="text-xl font-bold mb-3 text-red-400"><i class="fas fa-exclamation-triangle mr-2"></i>無法佔據用戶時間</h4>
+                        <p class="text-gray-300 mb-3 mobile-optimized">AI生成內容在用戶娛樂時間中的佔比快速增長：</p>
+                        <ul class="space-y-2 text-sm text-gray-400 mobile-optimized">
+                            <li>• 2025年：25% → 2026年：40% → 2028年：60% → 2030年：75%+</li>
+                            <li>• 傳統娛樂市場份額將縮減至30%以下</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="challenge-item">
+                        <h4 class="text-xl font-bold mb-3 text-red-400"><i class="fas fa-clock mr-2"></i>時間限制</h4>
+                        <p class="text-gray-300 mb-3 mobile-optimized">傳統明星面臨嚴重的時空限制：</p>
+                        <ul class="space-y-2 text-sm text-gray-400 mobile-optimized">
+                            <li>• 生理時間限制：一天只有24小時</li>
+                            <li>• 狀態變化：健康、情緒、年齡影響表現</li>
+                            <li>• 地理限制：無法同時出現在多個地方</li>
+                            <li>• 精力分配衝突：項目精力有限</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="challenge-item">
+                        <h4 class="text-xl font-bold mb-3 text-red-400"><i class="fas fa-dollar-sign mr-2"></i>成本效益劣勢</h4>
+                        <p class="text-gray-300 mb-3 mobile-optimized">傳統明星的高成本結構：</p>
+                        <ul class="space-y-2 text-sm text-gray-400 mobile-optimized">
+                            <li>• 基礎費用：片酬、代言費、出場費</li>
+                            <li>• 支持成本：團隊、差旅、住宿、安保</li>
+                            <li>• 風險成本：保險、違約風險、形象風險</li>
+                            <li>• 機會成本：檔期衝突、項目取捨</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="animate-slide-right" style="animation-delay: 0.3s;">
+                    <h3 class="text-3xl font-bold mb-8 gradient-text">AI原生數位人類的優勢</h3>
+                    
+                    <div class="solution-item">
+                        <h4 class="text-xl font-bold mb-3 text-green-400"><i class="fas fa-infinity mr-2"></i>無限生產能力</h4>
+                        <p class="text-gray-300 mb-3 mobile-optimized">AI原生內容的核心特徵：</p>
+                        <ul class="space-y-2 text-sm text-gray-400 mobile-optimized">
+                            <li>• 24/7 持續創作</li>
+                            <li>• 接近零邊際成本</li>
+                            <li>• 極致個性化</li>
+                            <li>• 實時互動能力</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="solution-item">
+                        <h4 class="text-xl font-bold mb-3 text-green-400"><i class="fas fa-shield-alt mr-2"></i>永不疲憊的完美表現</h4>
+                        <p class="text-gray-300 mb-3 mobile-optimized">AI原生數位人類的壓倒性優勢：</p>
+                        <ul class="space-y-2 text-sm text-gray-400 mobile-optimized">
+                            <li>• 隨時為粉絲服務</li>
+                            <li>• 零表現不佳風險</li>
+                            <li>• 完美可控無醜聞</li>
+                            <li>• 極低的創作維護成本</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="solution-item">
+                        <h4 class="text-xl font-bold mb-3 text-green-400"><i class="fas fa-rocket mr-2"></i>數位原生優勢</h4>
+                        <p class="text-gray-300 mb-3 mobile-optimized">從誕生即為數位環境設計：</p>
+                        <ul class="space-y-2 text-sm text-gray-400 mobile-optimized">
+                            <li>• 技術先進性</li>
+                            <li>• 完美適應數位平台</li>
+                            <li>• 快速進化能力</li>
+                            <li>• 與其他AI系統無縫協作</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center animate-fade-in">
+                <div class="bg-red-900 bg-opacity-20 border border-red-500 rounded-xl p-8 max-w-4xl mx-auto">
+                    <h3 class="text-2xl font-bold mb-4 text-red-400">時間窗口關閉</h3>
+                    <p class="text-gray-300 mb-4 mobile-optimized">AI原生內容市場處於快速發展的關鍵階段，先發優勢明顯：</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
+                        <div class="bg-red-800 bg-opacity-30 p-4 rounded-lg">
+                            <h4 class="font-bold text-red-300 mb-2">2025-2027：技術成熟</h4>
+                            <p class="text-gray-400">AI技術快速成熟，早期採用者獲得優勢</p>
+                        </div>
+                        <div class="bg-yellow-800 bg-opacity-30 p-4 rounded-lg">
+                            <h4 class="font-bold text-yellow-300 mb-2">2027-2029：市場擴張</h4>
+                            <p class="text-gray-400">AI原生內容成為主流，平台建立</p>
+                        </div>
+                        <div class="bg-gray-800 bg-opacity-50 p-4 rounded-lg">
+                            <h4 class="font-bold text-gray-300 mb-2">2029-2031：市場鞏固</h4>
+                            <p class="text-gray-400">市場結構固化，用戶偏好固定</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- StarOS Solutions -->
+    <section class="py-20" id="solutions">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16 animate-fade-in">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">StarOS 解決方案</h2>
+                <p class="text-xl text-gray-300 max-w-4xl mx-auto mobile-optimized">
+                    StarOS不僅幫助明星"工作得更好"，而是通過價值轉化機制，使他們能夠"成功遷移到未來世界"。
+                </p>
+            </div>
+            
+            <!-- Value Migration System -->
+            <div class="mb-20">
+                <h3 class="text-3xl font-bold mb-12 text-center gradient-text">明星價值遷移與激活系統</h3>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div class="animate-slide-right">
+                        <h4 class="text-2xl font-bold mb-6">價值基因映射技術</h4>
+                        <p class="text-gray-300 mb-6 mobile-optimized">StarOS開創性的"明星價值基因圖譜"將明星現實世界價值的所有維度精確捕捉為數位模型。</p>
+                        
+                        <div class="space-y-4">
+                            <div class="bg-blue-900 bg-opacity-20 border border-blue-500 rounded-lg p-4">
+                                <h5 class="font-bold text-blue-300 mb-2"><i class="fas fa-user mr-2"></i>形象價值基因</h5>
+                                <p class="text-sm text-gray-400 mobile-optimized">視覺編碼、動態魅力建模、時尚系統、鏡頭表現力</p>
+                            </div>
+                            
+                            <div class="bg-purple-900 bg-opacity-20 border border-purple-500 rounded-lg p-4">
+                                <h5 class="font-bold text-purple-300 mb-2"><i class="fas fa-brain mr-2"></i>才華價值基因</h5>
+                                <p class="text-sm text-gray-400 mobile-optimized">表演映射、聲樂系統、創作模式、即興能力</p>
+                            </div>
+                            
+                            <div class="bg-green-900 bg-opacity-20 border border-green-500 rounded-lg p-4">
+                                <h5 class="font-bold text-green-300 mb-2"><i class="fas fa-heart mr-2"></i>個性價值基因</h5>
+                                <p class="text-sm text-gray-400 mobile-optimized">性格建模、價值體系、情感識別、社交風格</p>
+                            </div>
+                            
+                            <div class="bg-yellow-900 bg-opacity-20 border border-yellow-500 rounded-lg p-4">
+                                <h5 class="font-bold text-yellow-300 mb-2"><i class="fas fa-star mr-2"></i>影響力價值基因</h5>
+                                <p class="text-sm text-gray-400 mobile-optimized">粉絲網絡、社會影響、商業價值、文化意義</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="animate-slide-right" style="animation-delay: 0.3s;">
+                        <img src="https://images.unsplash.com/photo-1635805737707-575885ab0820?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                             alt="Value Gene Mapping" class="w-full h-auto rounded-xl shadow-2xl">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Content Creation Revolution -->
+            <div class="mb-20">
+                <h3 class="text-3xl font-bold mb-12 text-center gradient-text">無界內容革命</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="card p-6 animate-slide-up">
+                        <div class="text-center mb-4">
+                            <div class="feature-icon mx-auto">
+                                <i class="fas fa-calendar-times"></i>
+                            </div>
+                            <h4 class="text-xl font-bold mb-3">完全日程解放</h4>
+                        </div>
+                        <div class="space-y-3 text-sm text-gray-400 mobile-optimized">
+                            <div class="flex justify-between">
+                                <span>無限並發</span>
+                                <span class="text-green-400">∞</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>即時可用性</span>
+                                <span class="text-green-400">24/7</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>變更風險</span>
+                                <span class="text-green-400">0%</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>日程衝突</span>
+                                <span class="text-green-400">無</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card p-6 animate-slide-up" style="animation-delay: 0.2s;">
+                        <div class="text-center mb-4">
+                            <div class="feature-icon mx-auto">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <h4 class="text-xl font-bold mb-3">風險消除與成本革命</h4>
+                        </div>
+                        <div class="space-y-3 text-sm text-gray-400 mobile-optimized">
+                            <div class="flex justify-between">
+                                <span>輿論風險</span>
+                                <span class="text-green-400">消除</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>聲譽崩塌</span>
+                                <span class="text-green-400">無</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>保險成本</span>
+                                <span class="text-green-400">$0</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>製作成本降低</span>
+                                <span class="text-green-400">90%+</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card p-6 animate-slide-up" style="animation-delay: 0.4s;">
+                        <div class="text-center mb-4">
+                            <div class="feature-icon mx-auto">
+                                <i class="fas fa-infinity"></i>
+                            </div>
+                            <h4 class="text-xl font-bold mb-3">無限創意擴展</h4>
+                        </div>
+                        <div class="space-y-3 text-sm text-gray-400 mobile-optimized">
+                            <div class="flex justify-between">
+                                <span>年齡外觀</span>
+                                <span class="text-green-400">可調</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>場景限制</span>
+                                <span class="text-green-400">消除</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>技能邊界</span>
+                                <span class="text-green-400">無限</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>創意實現</span>
+                                <span class="text-green-400">100% 可能</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Fan Community Value Co-creation -->
+            <div class="mb-20">
+                <h3 class="text-3xl font-bold mb-12 text-center gradient-text">粉絲社群價值共創</h3>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div class="animate-slide-right">
+                        <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                             alt="Fan Community" class="w-full h-auto rounded-xl shadow-2xl">
+                    </div>
+                    
+                    <div class="animate-slide-right" style="animation-delay: 0.3s;">
+                        <h4 class="text-2xl font-bold mb-6">從消費者到共同創造者</h4>
+                        <p class="text-gray-300 mb-6 mobile-optimized">StarOS重新定義粉絲角色，從被動消費者轉變為明星生態系統中的主動共同創造者。</p>
+                        
+                        <div class="space-y-4">
+                            <div class="bg-gradient-to-r from-blue-900 to-purple-900 bg-opacity-30 rounded-lg p-4">
+                                <h5 class="font-bold text-blue-300 mb-2"><i class="fas fa-lightbulb mr-2"></i>內容共同創造者</h5>
+                                <p class="text-sm text-gray-400 mobile-optimized">創意貢獻、劇本參與、角色設計、場景構建</p>
+                            </div>
+                            
+                            <div class="bg-gradient-to-r from-purple-900 to-pink-900 bg-opacity-30 rounded-lg p-4">
+                                <h5 class="font-bold text-purple-300 mb-2"><i class="fas fa-paint-brush mr-2"></i>體驗設計師</h5>
+                                <p class="text-sm text-gray-400 mobile-optimized">互動設計、功能建議、UX優化、個性化</p>
+                            </div>
+                            
+                            <div class="bg-gradient-to-r from-green-900 to-blue-900 bg-opacity-30 rounded-lg p-4">
+                                <h5 class="font-bold text-green-300 mb-2"><i class="fas fa-users mr-2"></i>社群建設者</h5>
+                                <p class="text-sm text-gray-400 mobile-optimized">文化塑造、活動組織、新人引導、規則創建</p>
+                            </div>
+                            
+                            <div class="bg-gradient-to-r from-yellow-900 to-red-900 bg-opacity-30 rounded-lg p-4">
+                                <h5 class="font-bold text-yellow-300 mb-2"><i class="fas fa-bullhorn mr-2"></i>價值放大器</h5>
+                                <p class="text-sm text-gray-400 mobile-optimized">口碑營銷、文化推廣、跨界合作</p>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-6 p-4 bg-accent bg-opacity-10 border border-accent rounded-lg">
+                            <h5 class="font-bold text-accent mb-2">重新設計的權利結構</h5>
+                            <div class="grid grid-cols-2 gap-4 text-sm text-gray-400 mobile-optimized">
+                                <div>• 決策參與權</div>
+                                <div>• 經濟收益權</div>
+                                <div>• 認可權</div>
+                                <div>• 治理投票權</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technology Architecture -->
+    <section class="py-20 bg-gradient-to-b from-gray-900 to-transparent" id="technology">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16 animate-fade-in">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">StarOS 技術架構</h2>
+                <p class="text-xl text-gray-300 max-w-4xl mx-auto mobile-optimized">
+                    StarOS建立了全面的技術體系，包括AI原生數位人類創建、Web3價值驗證、跨世界協議和智能激活引擎。
+                </p>
+            </div>
+            
+            <!-- Core Technologies -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+                <div class="tech-stack-item animate-slide-up">
+                    <div class="text-4xl text-blue-400 mb-4">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">AI數位人類創建</h3>
+                    <p class="text-gray-400 text-sm mobile-optimized">深度學習模型、多模態融合、實時渲染、智能互動</p>
+                </div>
+                
+                <div class="tech-stack-item animate-slide-up" style="animation-delay: 0.2s;">
+                    <div class="text-4xl text-purple-400 mb-4">
+                        <i class="fas fa-cube"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Web3價值驗證</h3>
+                    <p class="text-gray-400 text-sm mobile-optimized">區塊鏈、智能合約、NFT驗證、去中心化存儲</p>
+                </div>
+                
+                <div class="tech-stack-item animate-slide-up" style="animation-delay: 0.4s;">
+                    <div class="text-4xl text-green-400 mb-4">
+                        <i class="fas fa-exchange-alt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">跨世界價值轉移</h3>
+                    <p class="text-gray-400 text-sm mobile-optimized">價值橋接協議、跨鏈操作、資產映射、價值流通</p>
+                </div>
+                
+                <div class="tech-stack-item animate-slide-up" style="animation-delay: 0.6s;">
+                    <div class="text-4xl text-yellow-400 mb-4">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">智能價值激活</h3>
+                    <p class="text-gray-400 text-sm mobile-optimized">自適應算法、價值量化、收益分配、激勵機制</p>
+                </div>
+            </div>
+            
+            <!-- Digital Human Identity System -->
+            <div class="mb-16">
+                <h3 class="text-3xl font-bold mb-12 text-center gradient-text">數位人類身份與真實性</h3>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="card p-6 animate-slide-up">
+                        <h4 class="text-xl font-bold mb-4"><i class="fas fa-fingerprint text-blue-400 mr-2"></i>數位浮水印</h4>
+                        <div class="space-y-3 text-sm text-gray-400 mobile-optimized">
+                            <div><strong>可見層：</strong>品牌標識、認證徽章、狀態指示器</div>
+                            <div><strong>隱含層：</strong>頻率嵌入、時間嵌入、魯棒性</div>
+                            <div><strong>行為層：</strong>互動模式、元數據記錄、使用歷史</div>
+                        </div>
+                    </div>
+                    
+                    <div class="card p-6 animate-slide-up" style="animation-delay: 0.2s;">
+                        <h4 class="text-xl font-bold mb-4"><i class="fas fa-shield-check text-green-400 mr-2"></i>多層驗證</h4>
+                        <div class="space-y-3 text-sm text-gray-400 mobile-optimized">
+                            <div><strong>第1級：</strong>數位浮水印驗證、基本信息匹配</div>
+                            <div><strong>第2級：</strong>行為分析、技術指紋檢測</div>
+                            <div><strong>第3級：</strong>明星確認、第三方認證</div>
+                        </div>
+                    </div>
+                    
+                    <div class="card p-6 animate-slide-up" style="animation-delay: 0.4s;">
+                        <h4 class="text-xl font-bold mb-4"><i class="fas fa-search text-purple-400 mr-2"></i>真實性識別</h4>
+                        <div class="space-y-3 text-sm text-gray-400 mobile-optimized">
+                            <div><strong>多模態識別：</strong>視覺、聲音、行為模式分析</div>
+                            <div><strong>實時監控：</strong>24/7監測、異常檢測、警報</div>
+                            <div><strong>用戶教育：</strong>識別培訓、認知增強</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Blockchain Architecture -->
+            <div class="card p-8 animate-fade-in">
+                <h3 class="text-2xl font-bold mb-6 text-center gradient-text">區塊鏈驗證架構</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">
+                            <i class="fas fa-id-card"></i>
+                        </div>
+                        <h4 class="font-bold mb-2">數位身份註冊</h4>
+                        <p class="text-sm text-gray-400 mobile-optimized">創建時間戳、創建者身份、技術參數、授權範圍</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-purple-500 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">
+                            <i class="fas fa-certificate"></i>
+                        </div>
+                        <h4 class="font-bold mb-2">智能合約執行</h4>
+                        <p class="text-sm text-gray-400 mobile-optimized">自動分配、貢獻估值、透明追蹤、爭議預防</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">
+                            <i class="fas fa-link"></i>
+                        </div>
+                        <h4 class="font-bold mb-2">可追溯保障</h4>
+                        <p class="text-sm text-gray-400 mobile-optimized">創建溯源、使用追蹤、透明度、可審計性</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ecosystem -->
+    <section class="py-20" id="ecosystem">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16 animate-fade-in">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">生態系統與商業模式</h2>
+                <p class="text-xl text-gray-300 max-w-4xl mx-auto mobile-optimized">
+                    StarOS建立了完整的生態系統，包括價值保護、內容創作服務、粉絲社群運營和合作夥伴網絡。
+                </p>
+            </div>
+            
+            <!-- Business Model -->
+            <div class="mb-16">
+                <h3 class="text-3xl font-bold mb-12 text-center gradient-text">多維價值創造</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="value-proposition animate-slide-up">
+                        <div class="text-center mb-4">
+                            <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-xl mx-auto mb-3">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <h4 class="text-lg font-bold">明星變現</h4>
+                        </div>
+                        <ul class="space-y-2 text-sm text-gray-400 mobile-optimized">
+                            <li>• 數位化身授權</li>
+                            <li>• 內容創作收益分成</li>
+                            <li>• 數位品牌代言</li>
+                            <li>• IP授權與衍生品</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="value-proposition animate-slide-up" style="animation-delay: 0.2s;">
+                        <div class="text-center mb-4">
+                            <div class="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center text-xl mx-auto mb-3">
+                                <i class="fas fa-film"></i>
+                            </div>
+                            <h4 class="text-lg font-bold">平台收益</h4>
+                        </div>
+                        <ul class="space-y-2 text-sm text-gray-400 mobile-optimized">
+                            <li>• 平台服務費</li>
+                            <li>• 交易佣金</li>
+                            <li>• 技術服務費</li>
+                            <li>• 高級功能訂閱</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="value-proposition animate-slide-up" style="animation-delay: 0.4s;">
+                        <div class="text-center mb-4">
+                            <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-xl mx-auto mb-3">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <h4 class="text-lg font-bold">社群價值共享</h4>
+                        </div>
+                        <ul class="space-y-2 text-sm text-gray-400 mobile-optimized">
+                            <li>• 代幣獎勵機制</li>
+                            <li>• 基於貢獻的收益分成</li>
+                            <li>• NFT收藏品價值</li>
+                            <li>• 治理投票權</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="value-proposition animate-slide-up" style="animation-delay: 0.6s;">
+                        <div class="text-center mb-4">
+                            <div class="w-12 h-12 bg-yellow-500 rounded-full flex items-center justify-center text-xl mx-auto mb-3">
+                                <i class="fas fa-handshake"></i>
+                            </div>
+                            <h4 class="text-lg font-bold">生態系統合作</h4>
+                        </div>
+                        <ul class="space-y-2 text-sm text-gray-400 mobile-optimized">
+                            <li>• 技術授權</li>
+                            <li>• 平台整合費用</li>
+                            <li>• 數據服務</li>
+                            <li>• 解決方案套裝</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Token Economics -->
+            <div class="mb-16">
+                <h3 class="text-3xl font-bold mb-12 text-center gradient-text">Web3代幣經濟設計</h3>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div class="animate-slide-right">
+                        <h4 class="text-2xl font-bold mb-6">多層代幣系統</h4>
+                        
+                        <div class="space-y-4">
+                            <div class="bg-gradient-to-r from-blue-600 to-blue-800 rounded-lg p-4">
+                                <h5 class="font-bold text-white mb-2"><i class="fas fa-coins mr-2"></i>STAR - 基礎代幣</h5>
+                                <p class="text-blue-100 text-sm mobile-optimized">用於日常交易和基本權利，生態系統核心貨幣</p>
+                                <div class="mt-2 text-xs text-blue-200">
+                                    總供應量：1,000,000,000 STAR
+                                </div>
+                            </div>
+                            
+                            <div class="bg-gradient-to-r from-purple-600 to-purple-800 rounded-lg p-4">
+                                <h5 class="font-bold text-white mb-2"><i class="fas fa-medal mr-2"></i>CONTRIB - 貢獻代幣</h5>
+                                <p class="text-purple-100 text-sm mobile-optimized">基於社群貢獻的不可轉讓代幣</p>
+                                <div class="mt-2 text-xs text-purple-200">
+                                    發行：貢獻挖礦，動態供應
+                                </div>
+                            </div>
+                            
+                            <div class="bg-gradient-to-r from-green-600 to-green-800 rounded-lg p-4">
+                                <h5 class="font-bold text-white mb-2"><i class="fas fa-vote-yea mr-2"></i>GOV - 治理代幣</h5>
+                                <p class="text-green-100 text-sm mobile-optimized">用於社群治理和重大決策</p>
+                                <div class="mt-2 text-xs text-green-200">
+                                    分配：時間加權，活動獎勵
+                                </div>
+                            </div>
+                            
+                            <div class="bg-gradient-to-r from-yellow-600 to-yellow-800 rounded-lg p-4">
+                                <h5 class="font-bold text-white mb-2"><i class="fas fa-gem mr-2"></i>RARE - 收藏代幣</h5>
+                                <p class="text-yellow-100 text-sm mobile-optimized">具有特殊紀念價值的限量版代幣</p>
+                                <div class="mt-2 text-xs text-yellow-200">
+                                    策略：限量發行，特殊活動
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="animate-slide-right" style="animation-delay: 0.3s;">
+                        <div class="card p-6">
+                            <h4 class="text-xl font-bold mb-6 text-center">代幣分配</h4>
+                            <div class="space-y-4">
+                                <div class="flex justify-between items-center">
+                                    <span>明星與創作者</span>
+                                    <div class="flex items-center">
+                                        <div class="w-32 h-2 bg-gray-600 rounded-full mr-3">
+                                            <div class="h-full bg-blue-500 rounded-full" style="width: 40%"></div>
+                                        </div>
+                                        <span class="text-sm">40%</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex justify-between items-center">
+                                    <span>社群獎勵</span>
+                                    <div class="flex items-center">
+                                        <div class="w-32 h-2 bg-gray-600 rounded-full mr-3">
+                                            <div class="h-full bg-green-500 rounded-full" style="width: 25%"></div>
+                                        </div>
+                                        <span class="text-sm">25%</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex justify-between items-center">
+                                    <span>團隊與開發</span>
+                                    <div class="flex items-center">
+                                        <div class="w-32 h-2 bg-gray-600 rounded-full mr-3">
+                                            <div class="h-full bg-purple-500 rounded-full" style="width: 20%"></div>
+                                        </div>
+                                        <span class="text-sm">20%</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex justify-between items-center">
+                                    <span>生態基金</span>
+                                    <div class="flex items-center">
+                                        <div class="w-32 h-2 bg-gray-600 rounded-full mr-3">
+                                            <div class="h-full bg-yellow-500 rounded-full" style="width: 15%"></div>
+                                        </div>
+                                        <span class="text-sm">15%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-6 p-4 bg-accent bg-opacity-10 border border-accent rounded-lg">
+                                <h5 class="font-bold text-accent mb-2">代幣價值支持</h5>
+                                <ul class="space-y-1 text-sm text-gray-400 mobile-optimized">
+                                    <li>• 實用性：生態系統使用需求</li>
+                                    <li>• 稀缺性：供應控制與燃燒機制</li>
+                                    <li>• 增長性：隨生態系統增值</li>
+                                    <li>• 情感性：文化連接與意義</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Ecosystem Partners -->
+            <div class="mb-16">
+                <h3 class="text-3xl font-bold mb-12 text-center gradient-text">生態系統合作夥伴網絡</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="card p-6 animate-slide-up text-center">
+                        <div class="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">
+                            <i class="fas fa-broadcast-tower"></i>
+                        </div>
+                        <h4 class="text-xl font-bold mb-3">媒體與娛樂</h4>
+                        <p class="text-gray-400 text-sm mb-4 mobile-optimized">電影工作室、流媒體平台、人才機構、內容分發商</p>
+                        <div class="text-xs text-gray-500 mobile-optimized">
+                            提供內容製作、分發渠道、人才資源
+                        </div>
+                    </div>
+                    
+                    <div class="card p-6 animate-slide-up text-center" style="animation-delay: 0.2s;">
+                        <div class="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">
+                            <i class="fas fa-microchip"></i>
+                        </div>
+                        <h4 class="text-xl font-bold mb-3">技術與AI</h4>
+                        <p class="text-gray-400 text-sm mb-4 mobile-optimized">AI公司、雲平台、渲染服務、區塊鏈基礎設施</p>
+                        <div class="text-xs text-gray-500 mobile-optimized">
+                            提供尖端AI技術、計算資源、區塊鏈
+                        </div>
+                    </div>
+                    
+                    <div class="card p-6 animate-slide-up text-center" style="animation-delay: 0.4s;">
+                        <div class="w-16 h-16 bg-gradient-to-r from-green-500 to-blue-500 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">
+                            <i class="fas fa-coins"></i>
+                        </div>
+                        <h4 class="text-xl font-bold mb-3">金融與投資</h4>
+                        <p class="text-gray-400 text-sm mb-4 mobile-optimized">風投公司、加密交易所、DeFi協議、傳統機構</p>
+                        <div class="text-xs text-gray-500 mobile-optimized">
+                            提供資金、流動性服務、金融創新
+                        </div>
+                    </div>
+                    
+                    <div class="card p-6 animate-slide-up text-center" style="animation-delay: 0.6s;">
+                        <div class="w-16 h-16 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">
+                            <i class="fas fa-gavel"></i>
+                        </div>
+                        <h4 class="text-xl font-bold mb-3">法律與合規</h4>
+                        <p class="text-gray-400 text-sm mb-4 mobile-optimized">知識產權律師、合規顧問、監管機構、行業協會</p>
+                        <div class="text-xs text-gray-500 mobile-optimized">
+                            提供法律保護、合規指導、監管溝通
+                        </div>
+                    </div>
+                    
+                    <div class="card p-6 animate-slide-up text-center" style="animation-delay: 0.8s;">
+                        <div class="w-16 h-16 bg-gradient-to-r from-pink-500 to-red-500 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <h4 class="text-xl font-bold mb-3">全球市場</h4>
+                        <p class="text-gray-400 text-sm mb-4 mobile-optimized">國際機構、本地化服務、文化機構、政府</p>
+                        <div class="text-xs text-gray-500 mobile-optimized">
+                            提供全球市場准入、文化適應、政策支持
+                        </div>
+                    </div>
+                    
+                    <div class="card p-6 animate-slide-up text-center" style="animation-delay: 1s;">
+                        <div class="w-16 h-16 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h4 class="text-xl font-bold mb-3">教育與研究</h4>
+                        <p class="text-gray-400 text-sm mb-4 mobile-optimized">大學、研究機構、培訓組織、技術社區</p>
+                        <div class="text-xs text-gray-500 mobile-optimized">
+                            提供人才培養、技術研究、標準制定
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Roadmap -->
+    <section class="py-20 bg-gradient-to-b from-transparent to-gray-900" id="roadmap">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16 animate-fade-in">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">發展路線圖</h2>
+                <p class="text-xl text-gray-300 max-w-4xl mx-auto mobile-optimized">
+                    StarOS發展遵循分階段方法，關鍵里程碑旨在建立全球生態系統並實現長期願景。
+                </p>
+            </div>
+            
+            <div class="max-w-4xl mx-auto">
+                <div class="timeline-item animate-slide-up">
+                    <div class="bg-blue-900 bg-opacity-30 border border-blue-500 rounded-lg p-6">
+                        <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+                            <h3 class="text-2xl font-bold text-blue-300">階段一：技術基礎</h3>
+                            <span class="text-blue-400 font-medium">2025 Q4 - 2026 Q2</span>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="font-bold mb-2">核心技術開發</h4>
+                                <ul class="space-y-1 text-sm text-gray-400 mobile-optimized">
+                                    <li>• AI數位人類平台</li>
+                                    <li>• 區塊鏈身份驗證</li>
+                                    <li>• 數位浮水印與防偽</li>
+                                    <li>• 智能合約框架</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-bold mb-2">平台基礎設施</h4>
+                                <ul class="space-y-1 text-sm text-gray-400 mobile-optimized">
+                                    <li>• 雲基礎設施部署</li>
+                                    <li>• 分佈式存儲網絡</li>
+                                    <li>• API & SDK 開發</li>
+                                    <li>• 安全系統構建</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item animate-slide-up" style="animation-delay: 0.2s;">
+                    <div class="bg-purple-900 bg-opacity-30 border border-purple-500 rounded-lg p-6">
+                        <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+                            <h3 class="text-2xl font-bold text-purple-300">階段二：生態系統啟動</h3>
+                            <span class="text-purple-400 font-medium">2026 Q3 - 2027 Q1</span>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="font-bold mb-2">試點計劃啟動</h4>
+                                <ul class="space-y-1 text-sm text-gray-400 mobile-optimized">
+                                    <li>• 首批明星數位人類</li>
+                                    <li>• 試點內容項目</li>
+                                    <li>• 初步社群建設</li>
+                                    <li>• 價值分配驗證</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-bold mb-2">市場驗證</h4>
+                                <ul class="space-y-1 text-sm text-gray-400 mobile-optimized">
+                                    <li>• UX優化</li>
+                                    <li>• 商業模式驗證</li>
+                                    <li>• 技術性能調優</li>
+                                    <li>• 合規框架完善</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item animate-slide-up" style="animation-delay: 0.4s;">
+                    <div class="bg-green-900 bg-opacity-30 border border-green-500 rounded-lg p-6">
+                        <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+                            <h3 class="text-2xl font-bold text-green-300">階段三：規模擴展</h3>
+                            <span class="text-green-400 font-medium">2027 Q2 - 2028 Q4</span>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="font-bold mb-2">平台擴展</h4>
+                                <ul class="space-y-1 text-sm text-gray-400 mobile-optimized">
+                                    <li>• 大規模明星入駐</li>
+                                    <li>• 內容生態系統增長</li>
+                                    <li>• 全球社群建設</li>
+                                    <li>• 代幣經濟啟動</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-bold mb-2">生態系統增強</h4>
+                                <ul class="space-y-1 text-sm text-gray-400 mobile-optimized">
+                                    <li>• 合作夥伴網絡擴展</li>
+                                    <li>• 跨平台互操作性</li>
+                                    <li>• 國際化擴張</li>
+                                    <li>• 行業標準參與</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item animate-slide-up" style="animation-delay: 0.6s;">
+                    <div class="bg-yellow-900 bg-opacity-30 border border-yellow-500 rounded-lg p-6">
+                        <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+                            <h3 class="text-2xl font-bold text-yellow-300">階段四：創新與成熟</h3>
+                            <span class="text-yellow-400 font-medium">2029 Q1 - 2030+</span>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="font-bold mb-2">生態系統成熟</h4>
+                                <ul class="space-y-1 text-sm text-gray-400 mobile-optimized">
+                                    <li>• 建立行業領導地位</li>
+                                    <li>• 自持續生態系統</li>
+                                    <li>• 全球文化影響力</li>
+                                    <li>• 新技術探索</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-bold mb-2">未來創新</h4>
+                                <ul class="space-y-1 text-sm text-gray-400 mobile-optimized">
+                                    <li>• 元宇宙整合</li>
+                                    <li>• 腦機接口</li>
+                                    <li>• AGI協同創作</li>
+                                    <li>• 數位永生完美化</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-16 animate-fade-in">
+                <div class="card p-8 max-w-4xl mx-auto">
+                    <h3 class="text-2xl font-bold mb-6 gradient-text">長期願景：2030年及以後</h3>
+                    <p class="text-gray-300 mb-6 mobile-optimized">
+                        到2030年，StarOS將成為全球AI原生娛樂生態系統的核心基礎設施，連接現實與數位世界，從根本上改變文化價值的保存方式。
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
+                        <div class="bg-blue-900 bg-opacity-20 p-4 rounded-lg">
+                            <h4 class="font-bold text-blue-300 mb-2">技術領導力</h4>
+                            <p class="text-gray-400">AI數位人類的全球標準制定者和技術領導者</p>
+                        </div>
+                        <div class="bg-purple-900 bg-opacity-20 p-4 rounded-lg">
+                            <h4 class="font-bold text-purple-300 mb-2">生態繁榮</h4>
+                            <p class="text-gray-400">蓬勃發展的生態系統，擁有數百萬明星和數十億用戶</p>
+                        </div>
+                        <div class="bg-green-900 bg-opacity-20 p-4 rounded-lg">
+                            <h4 class="font-bold text-green-300 mb-2">文化遺產</h4>
+                            <p class="text-gray-400">保存和進化人類文化價值的關鍵載體</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="py-20 bg-gradient-to-r from-blue-900 via-purple-900 to-pink-900">
+        <div class="container mx-auto px-4 text-center">
+            <div class="max-w-4xl mx-auto animate-fade-in">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">加入AI原生革命</h2>
+                <p class="text-xl md:text-2xl text-gray-200 mb-8 mobile-optimized">
+                    StarOS正在重新定義娛樂的未來。無論您是明星、創作者、投資者還是科技愛好者，都可以參與這場歷史性變革。
+                </p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                    <div class="bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-6 border border-white border-opacity-20">
+                        <div class="text-4xl mb-4">🌟</div>
+                        <h3 class="text-xl font-bold mb-3">明星</h3>
+                        <p class="text-gray-300 mb-4 mobile-optimized">在AI原生世界保存並增強您的遺產與永恆影響力</p>
+                        <a href="#contact" class="btn-secondary px-6 py-2 rounded-full text-sm">了解更多</a>
+                    </div>
+                    
+                    <div class="bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-6 border border-white border-opacity-20">
+                        <div class="text-4xl mb-4">🎬</div>
+                        <h3 class="text-xl font-bold mb-3">內容創作者</h3>
+                        <p class="text-gray-300 mb-4 mobile-optimized">打破所有創意限制，在無界的數位世界釋放潛能</p>
+                        <a href="#contact" class="btn-secondary px-6 py-2 rounded-full text-sm">開始創作</a>
+                    </div>
+                    
+                    <div class="bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-6 border border-white border-opacity-20">
+                        <div class="text-4xl mb-4">💎</div>
+                        <h3 class="text-xl font-bold mb-3">投資者與合作夥伴</h3>
+                        <p class="text-gray-300 mb-4 mobile-optimized">幫助構建娛樂未來，共享AI原生時代的價值增長</p>
+                        <a href="#contact" class="btn-secondary px-6 py-2 rounded-full text-sm">合作洽詢</a>
+                    </div>
+                </div>
+                
+                <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+                    <a href="#whitepaper" class="btn-primary px-8 py-4 rounded-full font-medium text-lg">
+                        <i class="fas fa-download mr-2"></i>
+                        下載白皮書
+                    </a>
+                    <a href="#contact" class="btn-secondary px-8 py-4 rounded-full font-medium text-lg">
+                        <i class="fas fa-envelope mr-2"></i>
+                        聯繫我們
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-16 bg-black bg-opacity-50" id="contact">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-8 mb-12">
+                <div class="lg:col-span-2">
+                    <a href="#home" class="flex flex-col items-start mb-6">
+                        <div class="logo-font">StarOS</div>
+                        <div class="logo-sub">數位人類代理平台</div>
+                    </a>
+                    <p class="text-gray-400 mb-6 max-w-md mobile-optimized">
+                        全球首個專為數位時代遷移和激活明星價值的AI原生平台。
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-blue-600 transition">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-blue-600 transition">
+                            <i class="fab fa-telegram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-purple-600 transition">
+                            <i class="fab fa-discord"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-gray-600 transition">
+                            <i class="fab fa-medium"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-gray-600 transition">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-red-600 transition">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-6 gradient-text">平台功能</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-blue-400 transition mobile-optimized">數位人類創建</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-blue-400 transition mobile-optimized">價值遷移</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-blue-400 transition mobile-optimized">內容創作</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-blue-400 transition mobile-optimized">社群建設</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-blue-400 transition mobile-optimized">代幣經濟</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-blue-400 transition mobile-optimized">生態系統合作</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-6 gradient-text">資源與支持</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-blue-400 transition mobile-optimized">白皮書</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-blue-400 transition mobile-optimized">技術文檔</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-blue-400 transition mobile-optimized">開發者指南</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-blue-400 transition mobile-optimized">API文檔</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-blue-400 transition mobile-optimized">幫助中心</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-blue-400 transition mobile-optimized">社群論壇</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <div class="text-gray-500 text-sm mb-4 md:mb-0 mobile-optimized">
+                        <p>© 2025 StarOS 數位人類代理平台。保留所有權利。</p>
+                        <p class="mt-1">明星價值通往AI原生時代的門戶</p>
+                    </div>
+                    <div class="flex space-x-6 text-sm">
+                        <a href="#" class="text-gray-400 hover:text-blue-400 transition mobile-optimized">隱私政策</a>
+                        <a href="#" class="text-gray-400 hover:text-blue-400 transition mobile-optimized">服務條款</a>
+                        <a href="#" class="text-gray-400 hover:text-blue-400 transition mobile-optimized">法律聲明</a>
+                        <a href="#" class="text-gray-400 hover:text-blue-400 transition mobile-optimized">聯繫我們</a>
+                    </div>
                 </div>
             </div>
         </div>
     </footer>
 
-    <!-- Notification -->
-    <div class="notification" id="notification">
-        <div class="notification-content">
-            <i class="fas fa-check-circle" style="color: var(--success); margin-right: 0.5rem;"></i>
-            <span>Wallet connected successfully!</span>
-        </div>
-    </div>
+    <!-- Scroll to Top Button -->
+    <button id="scrollToTop" class="fixed bottom-8 right-8 w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white opacity-0 transition-all duration-300 hover:shadow-lg hover:scale-110 z-50">
+        <i class="fas fa-chevron-up"></i>
+    </button>
 
     <script>
-        // Navigation functions
-        function navigateTo(page) {
-            // Hide all pages
-            document.querySelectorAll('.page-container').forEach(el => {
-                el.classList.remove('active');
-            });
-            
-            // Show selected page
-            document.getElementById(`${page}-page`).classList.add('active');
-            
-            // Update active menu item
-            document.querySelectorAll('.nav-menu a, .mobile-menu a').forEach(el => {
-                el.classList.remove('active');
-                if (el.getAttribute('data-page') === page) {
-                    el.classList.add('active');
+        // Initialize function
+        document.addEventListener('DOMContentLoaded', function() {
+            // Navbar scroll effect
+            const navbar = document.querySelector('.navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 100) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
                 }
             });
             
-            // Close mobile menu
-            document.getElementById('mobileMenu').classList.remove('active');
+            // Scroll to top button
+            const scrollToTopBtn = document.getElementById('scrollToTop');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 500) {
+                    scrollToTopBtn.style.opacity = '1';
+                    scrollToTopBtn.style.transform = 'translateY(0)';
+                } else {
+                    scrollToTopBtn.style.opacity = '0';
+                    scrollToTopBtn.style.transform = 'translateY(20px)';
+                }
+            });
             
-            // Scroll to top
-            window.scrollTo(0, 0);
-        }
-        
-        function toggleMobileMenu() {
-            const menu = document.getElementById('mobileMenu');
-            menu.classList.toggle('active');
-        }
-        
-        function connectWallet() {
-            const walletStatus = document.getElementById('walletStatus');
-            const notification = document.getElementById('notification');
+            scrollToTopBtn.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
             
-            // Show loading state
-            walletStatus.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Connecting...';
+            // Scroll animations
+            const animatedElements = document.querySelectorAll('.animate-fade-in, .animate-slide-up, .animate-slide-right');
             
-            // Simulate connection process
-            setTimeout(() => {
-                walletStatus.innerHTML = '<i class="fas fa-check"></i> Connected';
-                notification.classList.add('show');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        if (entry.target.classList.contains('animate-slide-up')) {
+                            entry.target.style.transform = 'translateY(0)';
+                        }
+                        if (entry.target.classList.contains('animate-slide-right')) {
+                            entry.target.style.transform = 'translateX(0)';
+                        }
+                        if (entry.target.classList.contains('animate-fade-in')) {
+                            entry.target.style.transform = 'scale(1)';
+                        }
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            animatedElements.forEach(el => {
+                el.style.opacity = '0';
+                if (el.classList.contains('animate-slide-up')) {
+                    el.style.transform = 'translateY(50px)';
+                    el.style.transition = 'all 0.8s ease-out';
+                }
+                if (el.classList.contains('animate-slide-right')) {
+                    el.style.transform = 'translateX(-50px)';
+                    el.style.transition = 'all 0.8s ease-out';
+                }
+                if (el.classList.contains('animate-fade-in')) {
+                    el.style.transform = 'scale(0.95)';
+                    el.style.transition = 'all 1s ease-out';
+                }
+                observer.observe(el);
+            });
+            
+            // Mobile menu functionality
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const mobileMenu = document.querySelector('.mobile-menu');
+            const mobileMenuClose = document.querySelector('.mobile-menu-close');
+            
+            if (mobileMenuBtn && mobileMenu && mobileMenuClose) {
+                mobileMenuBtn.addEventListener('click', () => {
+                    mobileMenu.classList.add('open');
+                    document.body.style.overflow = 'hidden';
+                });
                 
-                // Hide notification after 3 seconds
-                setTimeout(() => {
-                    notification.classList.remove('show');
-                }, 3000);
-            }, 1500);
-        }
-        
-        function toggleLanguage() {
-            const langBtn = document.getElementById('currentLang');
-            langBtn.textContent = langBtn.textContent === 'EN' ? '中文' : 'EN';
-        }
-        
-        // Handle scroll event for navbar
-        window.addEventListener('scroll', function() {
-            const navbar = document.getElementById('navbar');
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
+                mobileMenuClose.addEventListener('click', () => {
+                    mobileMenu.classList.remove('open');
+                    document.body.style.overflow = 'auto';
+                });
+                
+                // Close menu when clicking links
+                const mobileMenuLinks = mobileMenu.querySelectorAll('a[href^="#"]');
+                mobileMenuLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        mobileMenu.classList.remove('open');
+                        document.body.style.overflow = 'auto';
+                    });
+                });
             }
-        });
-        
-        // Initialize animations on scroll
-        window.addEventListener('scroll', function() {
-            document.querySelectorAll('.fade-in').forEach(el => {
-                const position = el.getBoundingClientRect();
-                if (position.top < window.innerHeight - 50) {
-                    el.classList.add('visible');
-                }
+            
+            // Smooth scroll for nav links
+            const navLinks = document.querySelectorAll('a[href^="#"]');
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = link.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        const offsetTop = targetElement.offsetTop - 80; // Account for fixed navbar
+                        window.scrollTo({
+                            top: offsetTop,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Hero background parallax effect
+            const heroBackground = document.querySelector('.hero-bg');
+            if (heroBackground) {
+                window.addEventListener('scroll', () => {
+                    const scrolled = window.pageYOffset;
+                    const parallax = scrolled * 0.5;
+                    heroBackground.style.transform = `translateY(${parallax}px)`;
+                });
+            }
+            
+            // Ripple button effect
+            const buttons = document.querySelectorAll('.btn-primary, .btn-secondary');
+            buttons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    let ripple = document.createElement('span');
+                    ripple.classList.add('ripple');
+                    this.appendChild(ripple);
+                    
+                    let x = e.clientX - e.target.offsetLeft;
+                    let y = e.clientY - e.target.offsetTop;
+                    
+                    ripple.style.left = `${x}px`;
+                    ripple.style.top = `${y}px`;
+                    
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600);
+                });
             });
         });
     </script>
