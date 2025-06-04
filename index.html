@@ -91,6 +91,7 @@
             border-bottom: 1px solid rgba(0, 255, 157, 0.1);
             transition: all 0.3s ease;
             z-index: 1000;
+            padding: 0.75rem 1rem;
         }
         
         .navbar.scrolled {
@@ -381,6 +382,7 @@
             padding: 20px;
             transform: translateX(100%);
             transition: transform 0.3s ease;
+            overflow-y: auto;
         }
         
         .mobile-menu.open {
@@ -425,7 +427,7 @@
             display: none;
         }
         
-        /* Mobile Responsive */
+        /* Mobile Responsive - 主要修复区域 */
         @media (max-width: 1024px) {
             .desktop-nav {
                 display: none;
@@ -437,9 +439,13 @@
         }
         
         @media (max-width: 768px) {
+            .navbar {
+                padding: 0.6rem 1rem;
+            }
+            
             .hero {
                 min-height: 90vh;
-                padding-top: 100px;
+                padding-top: 100px; /* 调整顶部内边距 */
             }
             
             .logo-font {
@@ -450,10 +456,7 @@
             .logo-sub {
                 font-size: 0.6rem;
                 letter-spacing: 3px;
-            }
-            
-            .navbar {
-                padding: 0.75rem 1rem;
+                margin-top: -5px; /* 调整logo子标题位置 */
             }
             
             .mobile-menu-btn {
@@ -532,9 +535,18 @@
         }
         
         @media (max-width: 480px) {
+            .navbar {
+                padding: 0.5rem 1rem; /* 减少垂直间距 */
+                height: 60px; /* 固定导航栏高度 */
+            }
+            
+            .logo-container {
+                padding-top: 5px; /* 微调logo位置 */
+            }
+            
             .hero {
                 min-height: 85vh;
-                padding-top: 90px;
+                padding-top: 80px; /* 减少顶部内边距 */
             }
             
             .logo-font {
@@ -545,6 +557,7 @@
             .logo-sub {
                 font-size: 0.55rem;
                 letter-spacing: 2px;
+                margin-top: -3px; /* 进一步调整logo子标题位置 */
             }
             
             .hero h1 {
@@ -601,6 +614,15 @@
             .mobile-menu {
                 width: 85%;
             }
+            
+            /* 移动菜单字体调整 */
+            .mobile-menu a {
+                font-size: 1rem;
+            }
+            
+            .mobile-menu .text-xl {
+                font-size: 1rem;
+            }
         }
         
         /* Custom scrollbar */
@@ -655,6 +677,42 @@
             flex-direction: column;
             gap: 10px;
         }
+        
+        /* 新增：汉堡菜单动画效果 */
+        .hamburger-inner, .hamburger-inner::before, .hamburger-inner::after {
+            background-color: white;
+            height: 2px;
+            width: 24px;
+            transition: all 0.3s ease;
+        }
+        
+        .hamburger.active .hamburger-inner {
+            transform: rotate(45deg);
+        }
+        
+        .hamburger.active .hamburger-inner::before {
+            opacity: 0;
+        }
+        
+        .hamburger.active .hamburger-inner::after {
+            transform: rotate(-90deg) translate(7px, 0);
+        }
+        
+        /* 新增：移动菜单背景遮罩 */
+        .mobile-menu-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 999;
+        }
+        
+        .mobile-menu-overlay.active {
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -676,11 +734,14 @@
     <div class="data-stream" style="left: 40%; animation-delay: 0.5s;"></div>
     <div class="data-stream" style="left: 60%; animation-delay: 1s;"></div>
     <div class="data-stream" style="left: 80%; animation-delay: 1.5s;"></div>
+    
+    <!-- 移动菜单遮罩 -->
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
 
     <!-- Navigation -->
-    <nav class="navbar fixed w-full z-50 px-4 py-3">
+    <nav class="navbar fixed w-full z-50">
         <div class="container mx-auto flex justify-between items-center">
-            <a href="#home" class="flex flex-col items-center">
+            <a href="#home" class="flex flex-col items-center logo-container">
                 <div class="logo-font">StarOS</div>
                 <div class="logo-sub">數位人類代理平台</div>
             </a>
@@ -695,16 +756,18 @@
             <div class="flex items-center space-x-4">
                 <a href="#contact" class="btn-primary px-6 py-2 rounded-full text-sm hidden lg:block">聯繫我們</a>
                 
-                <button class="lg:hidden text-white mobile-menu-btn">
-                    <i class="fas fa-bars text-xl"></i>
+                <button class="lg:hidden text-white mobile-menu-btn" id="mobileMenuBtn">
+                    <div class="hamburger" id="hamburger">
+                        <div class="hamburger-inner"></div>
+                    </div>
                 </button>
             </div>
         </div>
     </nav>
 
     <!-- Mobile Menu -->
-    <div class="mobile-menu">
-        <div class="mobile-menu-close absolute top-5 right-5 text-2xl cursor-pointer text-accent">
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-close absolute top-5 right-5 text-2xl cursor-pointer text-accent" id="mobileMenuClose">
             <i class="fas fa-times"></i>
         </div>
         
@@ -1837,19 +1900,32 @@
             });
             
             // Mobile menu functionality
-            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-            const mobileMenu = document.querySelector('.mobile-menu');
-            const mobileMenuClose = document.querySelector('.mobile-menu-close');
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const mobileMenuClose = document.getElementById('mobileMenuClose');
+            const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+            const hamburger = document.getElementById('hamburger');
             
-            if (mobileMenuBtn && mobileMenu && mobileMenuClose) {
+            if (mobileMenuBtn && mobileMenu && mobileMenuClose && mobileMenuOverlay) {
                 mobileMenuBtn.addEventListener('click', () => {
                     mobileMenu.classList.add('open');
+                    mobileMenuOverlay.classList.add('active');
                     document.body.style.overflow = 'hidden';
+                    hamburger.classList.add('active');
                 });
                 
                 mobileMenuClose.addEventListener('click', () => {
                     mobileMenu.classList.remove('open');
+                    mobileMenuOverlay.classList.remove('active');
                     document.body.style.overflow = 'auto';
+                    hamburger.classList.remove('active');
+                });
+                
+                mobileMenuOverlay.addEventListener('click', () => {
+                    mobileMenu.classList.remove('open');
+                    mobileMenuOverlay.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                    hamburger.classList.remove('active');
                 });
                 
                 // Close menu when clicking links
@@ -1857,7 +1933,9 @@
                 mobileMenuLinks.forEach(link => {
                     link.addEventListener('click', () => {
                         mobileMenu.classList.remove('open');
+                        mobileMenuOverlay.classList.remove('active');
                         document.body.style.overflow = 'auto';
+                        hamburger.classList.remove('active');
                     });
                 });
             }
